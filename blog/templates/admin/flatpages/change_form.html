@@ -1,0 +1,23 @@
+{% extends "admin/change_form.html" %}
+{% load i18n admin_modify adminmedia %}
+{% block title %}{% trans "Change a page" %}{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<script type="text/javascript" src="{% admin_media_prefix %}js/urlify.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#id_title").keyup(function() {
+        var e = $("#id_slug")[0];
+        if (!e._changed) {
+            e.value = URLify(this.value, 64);
+        }
+    });
+    $('#id_body').wysiwyg();
+});
+
+</script>
+
+{% endblock %}
+
+
