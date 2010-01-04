@@ -7,7 +7,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     # (r'^djtest/', include('djtest.foo.urls')),
-    (r'^blog/(?P<path>.*)$', include('blog.urls')),
+    (r'^blog/', include('blog.urls')),
     (r'^voice/', include('partnervc.urls')),
 #    (r'^forum/', include('pybb.urls')),
 
