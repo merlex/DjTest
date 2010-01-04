@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from pprint import pprint
-import psycopg2
+#import psycopg2
 
 try:
     from lxml import etree
@@ -29,18 +29,18 @@ except ImportError:
                 except ImportError:
                     print("Failed to import ElementTree from any known place")
 
-try:
-    conn = psycopg2.connect("dbname='djtest' user='djtest' host='localhost' password='djtest' port='5433'");
-except:
-    print "I am unable to connect to the database"
+#try:
+#    conn = psycopg2.connect("dbname='djtest' user='djtest' host='localhost' password='djtest' port='5433'");
+#except:
+#    print "I am unable to connect to the database"
     
-cur = conn.cursor()
-cur.execute("""SELECT * FROM partnervc_additvc""")
-rows = cur.fetchall()
-print "\nShow me the databases:\n"
-for row in rows:
-    print "   ", row[0]
-    pprint(row)
+#cur = conn.cursor()
+#cur.execute("""SELECT * FROM partnervc_additvc""")
+#rows = cur.fetchall()
+#print "\nShow me the databases:\n"
+#for row in rows:
+#    print "   ", row[0]
+#    pprint(row)
 
 src = './voicecards.xml'
 tree = etree.parse(src)
