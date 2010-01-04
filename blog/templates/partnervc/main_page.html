@@ -1,0 +1,84 @@
+{% extends "shablon.html" %}
+
+{% block rubricator %}
+<div class="b-side">
+    <h2>Открытки по темам</h2>
+    <!-- block content -->
+    <div class="b-side__content b-side__content_themes">
+        <ul class="b-themes">
+	<!-- round block -->
+            {% for category in categories %}
+            <li>
+    	        <img src="/media/export/images/blank.gif">
+                <!-- @todo add class -->
+                <h3 class="add class">
+                    {#{ category.childs }#}
+                    <a href="/voice/category/{{ category.id }}/">{{ category.name }}</a>
+                </h3>
+                <p>
+                    {% for child in category.childs %}
+                    <a href="/voice/category/{{ child.id }}/">{{ child.name }}</a>,
+                    {% endfor %}
+                </p>
+            </li>
+            {% endfor %}
+        <!-- /round block -->
+        </ul>
+    </div>
+    <!-- /block content -->
+</div>
+{% endblock %}
+
+{% block content %}
+<noindex>
+<script type="text/javascript">
+
+jQuery.extend({
+  prevholidaytop: function(el) {
+    if ( $("#scrollableholidaytop .holidays-list:visible").prev('.holidays-list').size() > 0  )
+    {
+        $("#scrollableholidaytop .holidays-list:visible").hide().prev().show();
+    }
+    return true;
+  },
+  nextholidaytop: function(el) {
+    if ( $("#scrollableholidaytop .holidays-list:visible + ul").size() > 0 )
+    {
+        $("#scrollableholidaytop .holidays-list:visible").hide().next().show();
+    }
+    return true;
+  }
+});
+</script>
+</noindex>
+<!-- round block holidays -->
+<div class="b-box b-box_holidays" id="scrollableholidaytop">
+    <ul class="ctrl-roll">
+        <li><a href="javascript:void(0);" onclick="$.prevholidaytop($(this))" class="prev"></a></li>
+        <li><a href="javascript:void(0);" onclick="$.nextholidaytop($(this))" class="next"></a></li>
+    </ul>
+    <h2>Открытки к празднику</h2>
+    <ul class="holidays-list">
+    {% for hol in holidays %}
+        {% if forloop.counter0 %}{#  and forloop.counter0/3==0 #}
+        </ul>
+        <ul class="holidays-list" {% if forloop.counter0 %}style="display: none"{% endif %}>
+        {% endif %}
+            <li>
+                <div class="pic"><a href="/voice/holiday/{{ hol.id }}"><img src="{{ hol.img }}" width="64" height="64" alt="{{ hol.name }}" /></a></div>
+                <div class="holiday">
+                    <p>
+        {% if hol.today %}
+                        <img src="/media/export/images/today.gif" align="сегодня" />
+        {% endif %}
+                        <a href="/voice/holiday/{{ hol.id }}">{{ hol.name }}</a>
+                    </p>
+                    <span class="count">@todo count открыток</span>
+                    <span class="date">{{ hol.day }} {{ hol.month }}</span>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+</div>
+<!-- /round block holidays -->
+{% endblock %}

@@ -1,5 +1,11 @@
-<html>
-<body>
-{{ count }}
-</body>
-</html>
+{% extends "index.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+    {{ count }}
+    <br/>
+    {% for arg in addit %}
+        {{ arg.tag }} - {{ arg.text }}<br/>
+    {% endfor %}
+{% endblock %}
