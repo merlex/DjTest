@@ -1,0 +1,63 @@
+/*
+CONTENT
+===============================================================================================================*/
+
+/*-- structure --------------------------------------------------------------------*/
+.l-column_right {margin-left:-311px;}
+.l-column_left { width:641px; margin-left:-964px;}
+
+/*-- right block -------------------------------------------------------------------------------------
+.b-side {width:270px;}*/
+.b-side .b-side__content {zoom:1;}
+
+/*-- left block -------------------------------------------------------------------------------------*/
+.b-box .b-box__content {width:604px; overflow:hidden;}
+
+/*-- left round block [holidays] --------------------------------------------------------------------*/
+.holidays-list { float:left; margin: 0;}
+.holidays-list li {height:68px;}
+
+/*-- month list --------------------------------------------------------------------*/
+.months_list {margin:0 0 0px;}
+
+/*-- card block --------------------------------------------------------------------*/
+.b-card .card-info {zoom:1;}
+
+/*-- left round block [rubricator] --------------------------------------------------------------------*/
+* html* .g-png {
+	zoom: expression(
+            runtimeStyle.zoom = 1, 
+            runtimeStyle.filter += "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + getElementsByTagName("img")[0].src + ")"
+        );
+}
+* html* .g-png img{ visibility: expression(
+            runtimeStyle.visibility="hidden",
+            parentNode.insertBefore(createElement("png"), this)
+        );}
+* html* .g-png_scale {
+	zoom: expression(
+            runtimeStyle.zoom = 1, 
+            runtimeStyle.filter += "progid:DXImageTransform.Microsoft.AlphaImageLoader(src=" + getElementsByTagName("img")[0].src + ", sizingMethod='scale')"
+        );
+}
+* html* .g-png_scale img{ visibility: expression(
+            runtimeStyle.visibility="hidden",
+            parentNode.insertBefore(createElement("png"), this)
+        );}
+* html* .g-png png{ font-size: 0; position: absolute; width: expression(runtimeStyle.width = parentNode.offsetWidth + "px"); height: expression(runtimeStyle.height = parentNode.offsetHeight + "px"); }
+
+.b-code_page { overflow:hidden;}
+
+.card-send .btn {zoom: expression(this.onmouseover = new Function(" this.className += ' hover';  "),this.onmouseout = new Function(" this.className = this.className.replace(' hover','')") );}
+.card-send .btn.hover {background-position:0 -45px;}
+.card-send .btn-small {zoom: expression(this.onmouseover = new Function(" this.className += ' hover-small';  "),this.onmouseout = new Function(" this.className = this.className.replace(' hover-small','')") );}
+.card-send .btn-small.hover-small{background-position:0 -26px;}
+
+* html #blocker{filter: progid:DXImageTransform.Microsoft.Alpha(opacity=75); position:absolute; height: expression(parseInt(document.documentElement.clientHeight, 10) + document.documentElement.scrollTop + "px");}
+* html .b-window {position:absolute; top: expression(parseInt(document.documentElement.scrollTop, 10)+ document.documentElement.clientHeight/2 + "px");}
+* html .b-window .window-top{background-image:none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/voicecards/images/window/top.png", sizingMethod="scale");}
+* html .b-window .window-bg{background-image:none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/images/window/bg.png", sizingMethod="scale");}
+* html .b-window .window-btm{background-image:none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/voicecards/images/window/btm.png", sizingMethod="scale");}
+* html .b-window_brdr .window-top {background-image:none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/voicecards/images/window/brdr_top.png", sizingMethod="image");}
+* html .b-window_brdr .window-bg {filter:none;}
+* html .b-window_brdr .window-btm {background-image:none; filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/voicecards/images/window/brdr_btm.png", sizingMethod="image");}
