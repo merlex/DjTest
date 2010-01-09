@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="Голосовые открытки с днем рождения, поздравления с праздниками: День рождения, свадьба, юбилей, день здоровья, Дом 2. Поздравления с днем рождения, поздравления к свадьбе и юбилею, приколы и розыгрыши на {{ site.name }}" />
+    <meta name="keywords" content="Поздравления, открытки, голосовые открытки, смс поздравления, прикольные поздравления, поздравления день рождения, поздравления юбилей, свадебные поздравления, телефон приколы, поздравления новогодние, поздравления подруге, поздравления коллегам, поздравление мужчине, поздравления начальнику, поздравления 23 февраля, поздравления 8 марта, валентинки, признания в любви в стихах, поздравления маме на {{ site.name }}">
+    <title>Поздравления с днем рождения. Голосовые открытки. Прикольные смс поздравления с праздником, юбилеем, свадьбой.</title>
+    <link href="/media/export/css/main.css" rel="stylesheet" type="text/css" media="all" />
+    <!--[if IE 7]><link rel="stylesheet" href="/media/export/css/ie7.css" media="all" /><![endif]-->
+    <!--[if lt IE 7]><link rel="stylesheet" href="/media/export/css/ie6.css" media="all" /><![endif]-->
+    <script type="text/javascript" src="/media/export/js/js.js"></script>
+    <script type="text/javascript" src="/media/export/js/jquery-1.3.2.min.js"></script>
+</head>
+    <body id="vcbody">
+<!-- content -->
+<div class="l-page">
+	<div class="l-page-i">
+
+		<!-- right column -->
+		<div class="l-column l-column_right">
+			<div class="l-column-i">
+{% block rubricator %}
+{% endblock %}
+			</div>
+		</div>
+		<!-- /right column -->
+
+		<!-- left column -->
+		<div class="l-column l-column_left">
+			<div class="l-column-i">
+
+{% block content %}
+{% endblock %}
+
+			</div>
+		</div>
+		<!-- /left column -->
+
+	</div>
+</div>
+<!-- /content -->
+ <div class="clear"></div>
+{% block footer %}
+    <div id="footer_cont">
+    <div id="footer">
+    <script type="text/javascript">
+    function showWin(filename)
+    {
+        return MM_openBrWindow(filename);
+    }
+
+    var SendWin;
+    function MM_openBrWindow(filename)
+    {
+        if(filename == '') filename = 'support';
+        var theURL = '/export/' + filename;
+        var winName = '';
+        var width = 600;
+            var height = 400;
+        var features = 'width=' + width + ', height=' + height + ', titlebar=no, resizable=yes, status=yes, scrollbars=yes';
+
+            SendWin=window.open(theURL,winName,features);
+            SendWin.focus();
+            return false;
+    }
+    </script>
+    <a href="javascript:void(0)" onclick="showWin('details');">Реквизиты</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="showWin('support');">Служба поддержки</a>&nbsp;&nbsp;<a href="javascript:void(0)" onclick="showWin('prices');">Информация о стоимости услуг</a>
+    <br>
+    <br>
+    © <a href="http://www.voicecards.ru">Voicecards.ru</a>  -  <a href="http://www.voicecards.ru">поздравления с днем рождения</a>, <a href="http://www.voicecards.ru">поздравления к праздникам</a>, <a href="http://www.voicecards.ru">признания в любви и дружбе</a>, <a href="http://www.voicecards.ru">розыгрыши и приколы</a>, <a href="http://www.voicecards.ru">оригинальные открытки и поздравления</a>, <a href="http://www.voicecards.ru">открытки для коллег по работе и учебе</a>, <a href="http://www.voicecards.ru">поздравления и открытки по профессиям</a>, <a href="http://www.voicecards.ru">открытки и поздравления на каждый день</a>. </div></div>
+{% endblock %}
+</body>
+</html>
