@@ -82,6 +82,8 @@ def export_cards(request, **kw):
             card[child.tag] = child.text
         c +=1
         addit.append(card)
+        if not card['text']:
+            card['text'] = ''
         cards = CardVC(title = card['title'],
                        cardid = int(card['cardid']),
                        path = card['path'],
