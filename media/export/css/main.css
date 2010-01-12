@@ -1,0 +1,368 @@
+/*-- structure --------------------------------------------------------------------*/
+.l-page { width:983px; margin:0 auto; overflow:auto; text-align:left;}
+.l-page-i {  width:983px; margin:0 auto; padding: 20px 0; background:#fff; float:left; position:relative;}
+
+/*-- columns --------------------------------------------------------------------*/
+.l-column { float:left; position:relative; left:100%;}
+.l-column_left { width:640px; margin-left:-964px;}
+.l-column_right {width:293px; margin-left:-312px;}
+.l-column_one { width:943px; margin-left:-964px;}
+.l-column_one h2 { padding:20px 0 20px;}
+
+/*-- color theme ------------------------------------------------------------------*/
+.c-birthday, .c-birthday a {color:#cc8600;}
+.c-birthday a:hover {color:#cc8600;}
+.c-joke, .c-joke a {color:#aa0000;}
+.c-joke a:hover {color:#aa0000;}
+.c-love, .c-love a {color:#ff0054;}
+.c-love a:hover {color:#ff0054;}
+.c-eachday, .c-eachday a {color:#199401;}
+.c-work, .c-work a {color:#a800d8;}
+.c-work a:hover {color:#a800d8;}
+.c-prof, .c-prof a {color:#009ac0;}
+.c-prof a:hover {color:#009ac0;}
+.c-holidays, .c-holidays a {color:#4fac36;}
+.c-holidays a:hover {color:#4fac36;}
+.c-family, .c-family a {color:#03a2ec;}
+.c-family a:hover {color:#03a2ec;}
+.c-virt, .c-virt a {color:#ef783d;}
+.c-virt a:hover {color:#ef783d;}
+.c-city, .c-city a {color:#d33494;}
+.c-city a:hover {color:#d33494;}
+
+/*-- region --------------------------------------------------------------------*/
+.b-region { height:25px; color:#000; width:240px; font:12px Tahoma, Geneva, sans-serif;}
+.b-region a{ padding:0 0 0 3px; color:#0052db;}
+.b-region span{ float:left; padding:1px 5px 0 0; display:block;}
+.b-region .cur-region{ padding:1px 0 0;}
+.b-region .sel-region{ float:left;}
+.b-region .sel-region form{ display:inline; height:auto;}
+.b-region .sel-region select{ padding:0; width:120px; font-size:11px;}
+
+/*-- card block --------------------------------------------------------------------*/
+.b-card { width:100%; overflow:hidden; position:relative;}
+.b-card .player{ float:left; cursor:pointer;}
+.b-card .player img {color:#889293; font-size:10px; border:none;}
+.b-card .card-info { margin:0 0 0 71px; position:relative;}
+.b-card h4{ font-weight:bold; font-size:11px; margin:0; padding:0 0 3px; }
+.b-card h4 a {font:bold 11px Tahoma, Geneva, sans-serif; color:#0052DB; text-decoration:underline;}
+.b-card h4 a:hover {text-decoration:none; color:#0052DB;}
+.b-card p { padding:0; font-size:11px;}
+.b-card .time{ color:#000;}
+.b-card .place{ color:#818181;}
+.b-card .place span {white-space:nowrap;}
+.b-card .theme { padding:2px 0 0;}
+.b-card .theme a{ color:#818181; text-decoration:none; font: 11px Tahoma, Geneva, sans-serif;}
+.b-card .theme a:hover{ text-decoration:underline;}
+.b-card .send a{background: url(/media/export/images/btn_send_bg.gif) 0px 0px no-repeat; color:#889293; display:block; width:60px; text-align:center; height:17px; margin:5px 0 0; font-size:10px; text-decoration:none; line-height:14px;}
+.b-card .send a:hover {background: url(/media/export/images/btn_send_bg.gif) -60px 0px no-repeat; color:#0052DB;  text-decoration:none;}
+
+/*-- paginator --------------------------------------------------------------------*/
+.b-paginator { margin:20px 0 0; padding:0 0 10px; width:100%; position:relative; overflow:hidden; font: 11px Tahoma, Geneva, sans-serif;}
+.b-paginator .cur-page { color:#000; font: bold 11px Tahoma, Geneva, sans-serif;}
+.b-paginator .cur-page span{ color:#0052db; font-size:16px; font-weight:bold;}
+.b-paginator .btn-back, .b-paginator .btn-forw {position:absolute; top:17px; width:20px; height:20px; background:#5ca3d1 url(/media/export/images/pag_btns.png) no-repeat;}
+.b-paginator .btn-back { left:4px; background-position:0 0;}
+.b-paginator .btn-forw { right:4px; background-position:0 -40px;}
+.b-paginator .btn-back:hover {background-position:0 -20px;}
+.b-paginator .btn-forw:hover { background-position: 0 -60px;}
+.b-paginator .pag-left, .b-paginator .pag-right {height:40px; float:left; width:15px; position:relative;}
+.b-paginator .pag-left  {background: url(/media/export/images/pag_left.png) no-repeat bottom left; padding:0 20px 0 0;}
+.b-paginator .pag-right {background: url(/media/export/images/pag_right.png) no-repeat bottom right;  padding:0 0 0 20px;}
+.b-paginator .pag-cont  {background: url(/media/export/images/pag_bg.png) repeat-x bottom; float:left; margin:7px 0 0;}
+.b-paginator .pag-cont a { text-decoration:none; padding:13px 0 0; margin:0 6px 0 5px; color:#888; display:block; float:left; width:22px; height:20px; text-align:center; font-family:"Courier New", Courier, monospace; line-height:12px;}
+.b-paginator .pag-cont a:hover {color:#0052db;}
+.b-paginator .pag-cont a.act { text-decoration:none; color:#0052db; background:#fff url(/media/export/images/page_act.gif) top center;}
+
+/*-- code block -----------------------------------------*/
+.b-code .desc { padding:0 0 13px; font:12px Tahoma, Geneva, sans-serif;}
+.b-code .cont { background:url(/media/export/images/window/codeBg.png) no-repeat; width:405px; height:145px; margin-left:-2px; padding:10px 10px 0px 20px; position:relative;}
+.b-code .sms {color:#B32500; font:bold 14px Tahoma, Geneva, sans-serif; line-height:18px; padding:3px 0 0 10px;}
+.b-code .sms-nmbr{position:absolute; bottom:13px; left:20px;}
+.b-code .sms-nmbr big{font-size:18px;}
+.b-code .sms-txt {position:absolute; top:7px; left:20px;}
+.b-code .format {font:10px Tahoma, Geneva, sans-serif; color:#606060; float:right; width:80px; padding:40px 0px 0 15px; line-height:12px;}
+.b-code .code {color:#840808; padding:20px 0 18px 7px; font:50px/100% Arial, Tahoma, Verdana; position:absolute; top:30px; left:20px; background:none;}
+.b-code .send-info {overflow:hidden; width:380px; margin:10px auto;}
+.b-code .field p { padding:3px 0 0; margin:0; font:12px Tahoma, Geneva, sans-serif;}
+.b-code .field_nmbr { float:left; width:180px;}
+.b-code .field_dlvr { float:right; text-align:right; width:190px; padding:0 5px 0 0;}
+.b-code_page {font-size:12px; width:339px;}
+.b-code_page .cont { background:url(/media/export/images/window/codeBgSmall.png) no-repeat; width:309px; height:145px; margin-left:-5px; padding:10px 10px 0 20px; position:relative;}
+.b-code_page .format {font-size:10px; color:#606060; position:absolute; bottom:12px; right:10px; width:145px; line-height:12px;}
+.b-code_page .field_nmbr, .b-code_page .field_dlvr, .b-code_page .field_name {float:none; text-align:left; padding:0 0 10px; width:auto;}
+
+.b-notification { width:339px; height:auto; padding:20px 0 0; background:url(/media/export/images/bg_notification.png) no-repeat top left;}
+.b-notification-i { background:url(/media/export/images/bg_notification.png) no-repeat bottom left; padding:10px 30px 20px; color:#444;}
+.b-notification p {font:12px Tahoma, Geneva, sans-serif; line-height:14px; margin:0; padding:0 0 10px;}
+.b-notification h4 {font:20px Tahoma, Geneva, sans-serif; margin:0 0 15px; color:#000;}
+.b-notification h5 {color:#ff6400; font:14px Tahoma, Geneva, sans-serif; margin:0 0 10px;}
+.b-notification input {color:#7F7F7F; font-size:11px; height:22px; border:none; vertical-align:middle; margin:0; padding:0;}
+.b-notification .email { width:176px; background:url(/media/export/images/notification_input.png) no-repeat; height:14px; padding:4px; margin-right:10px;}
+.b-notification .submit {width:80px; background:url(/media/export/images/notification_btn.png) no-repeat;}
+.b-notification form { margin: 0 0 10px;}
+
+/*-- item block --------------------------------------------------------------------*/
+.b-item { overflow:hidden; width:100%;}
+.b-item .pic{ float:left; width:70px;}
+.b-item .pic img{ display:block;}
+.b-item .text { margin:0 0 0 77px; padding:2px 0 0; line-height:12px;}
+.b-item .text a{ font:bold 11px Tahoma, Geneva, sans-serif; color:#0052db;}
+.b-item .text a:hover { color:#0052db;}
+
+
+
+/*
+RIGHT
+===============================================================================================================*/
+
+/*-- right round block --------------------------------------------------------------------*/
+.b-side {background:#f7f7f7; color:#424242; font-size:11px; border:1px solid #dfdfdf; float:right; width:273px; padding: 0 9px 9px; margin:0 0 25px; position:relative; -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px;}
+.b-side h2{ padding:15px 15px 17px 15px; color:#000; font:22px/22px Tahoma, Geneva, sans-serif;}
+.b-side .b-side__content {background:#fff; padding:15px 15px 10px; position:relative; overflow:hidden;  -moz-border-radius: 2px; -khtml-border-radius: 2px; -webkit-border-radius: 2px;}
+.info-text-scroll { height:316px; overflow:auto; width:240px; padding-right:10px;}
+
+/*-- rubricator mini --------------------------------------------------------------------*/
+.b-themes { font-size:10px; margin:-7px 0; padding:0; list-style:none outside;}
+.b-themes li{ overflow:hidden; width:100%;}
+.b-themes li img { float:left;}
+.b-themes li h3 { margin:2px 0 0 50px; font:18px/18px Tahoma, Geneva, sans-serif; padding:0 0 2px;}
+.b-themes li p { margin:0 -193px 0 50px; padding:0 0 11px; width:193px; line-height:12px; text-align:left;}
+.b-themes li p a {text-decoration:none; color:#454545; white-space:nowrap; font: 10px Tahoma, Geneva, sans-serif;}
+.b-themes li p a:hover {text-decoration:underline; color:#454545;}
+
+
+
+/*
+LEFT
+===============================================================================================================*/
+
+/*-- controls --------------------------------------------------------------------*/
+.ctrl-listen  { position:absolute; top:12px; right:14px; width:165px; display:none;}
+.ctrl-roll { list-style:none outside; width:52px; overflow:hidden; position:absolute; top:20px; right:5px; margin:0; padding:0; list-style:none outside;}
+.ctrl-roll li{ float:left; width:21px; height:15px; margin:0 5px 0 0;}
+.ctrl-roll .prev, .ctrl-roll .next {width:21px; height:15px; display:block; background:url(/media/export/images/control_scroll_btns.gif) no-repeat;}
+.ctrl-roll .prev { background-position: 0 0;}
+.ctrl-roll .next { background-position: 0 -30px;}
+.ctrl-roll .prev:hover { background-position: 0 -15px;}
+.ctrl-roll .next:hover { background-position: 0 -45px;}
+
+/*-- left block --------------------------------------------------------------------*/
+.b-box { border:solid #dfdfdf; border-width: 1px 0; padding:20px 17px; margin:-1px 0 0; width:606px; position:relative; z-index:1; font: 11px Tahoma, Geneva, sans-serif;}
+.b-box h2{ padding:0 0 5px; color:#000; font:22px/22px Tahoma, Geneva, sans-serif;}
+.b-box .all-cards{ text-align:right; padding:0;}
+.b-box .all-cards a {color:#0052DB; font:11px Tahoma, Geneva, sans-serif;}
+.b-box .all-cards a:hover {color:#0052DB; text-decoration:none;}
+.b-box p {margin:0;}
+
+
+/*-- cards list ----------------------------------------------------------------*/
+.cards-list { border:none; border-collapse:collapse; padding:0; margin:0 0 10px; table-layout:fixed;}
+.cards-list td{ width:185px; padding:20px 20px 5px 0; vertical-align:top;}
+
+/*-- left round block [holidays] --------------------------------------------------------------------*/
+.b-box_holidays { margin:0 0 20px; border:none; background:#ffeddf; overflow:hidden; padding:20px 10px 10px; width:619px; position:relative; -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px;}
+.b-box_holidays h2{ color:#FB7000; padding:0 0 20px 8px;}
+
+.holidays-list {width:100%; position:relative; overflow:hidden; list-style:none outside; margin:0; padding:0;}
+.holidays-list li{ width:190px; height:auto; padding:5px 7px 11px; position:relative; float:left;}
+.holidays-list .pic{ float:left;}
+.holidays-list .pic img{ border:3px solid #fc8500; display:block;}
+.holidays-list .holiday{ margin: 0 0 0 78px;}
+.holidays-list .holiday a {font:bold 11px Tahoma, Geneva, sans-serif; color:#0052DB;}
+.holidays-list .holiday a:hover {color:#0052DB; text-decoration:none;}
+.holidays-list .holiday img {display:block; margin:0 0 3px;}
+.holidays-list .holiday p {padding:0;}
+.holidays-list .holiday .count { color:#888; display:block; font-size:11px; margin:5px 0;}
+.holidays-list .holiday .date{ color:#4b4b4b; font:bold 11px Tahoma, Geneva, sans-serif; display:block; margin:5px 0 0;}
+
+/*-- left round block [more] --------------------------------------------------------------------*/
+.b-box_more { background:#f7f7f7; border:1px solid #dcdfe5; width:604px; margin:20px 0 0; padding-bottom:17px; position:relative; padding-top:10px; -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px;}
+.b-box_more h2 { padding:5px 0 0;}
+.b-box_more h3 { color:#424242; font:22px/20px Tahoma, Geneva, sans-serif;}
+.b-box_more .b-box__content{ overflow:hidden; width:604px; padding-top:5px;}
+.b-box_more .near {  width:100%; padding:5px 0 0;}
+.b-box_more .near h3 { margin:0 0 20px;}
+.b-box_more .near .b-item{ padding:0 0 10px;}
+.b-box_more .near ul { width:100%; overflow:hidden; margin:0; padding:0; list-style:none outside;}
+.b-box_more .near li { width:190px; padding-right:10px; float:left;}
+.b-box_more .near li span {color:#4B4B4B; display:block; font:bold 11px Tahoma, Geneva, sans-serif; padding:3px 0 0;}
+.b-box_more .near ul.last li .b-item { padding:0;}
+.b-box_more .view-also { border:none; padding:0;}
+
+/*-- left round block [blue] --------------------------------------------------------------------*/
+.b-box_blue { background:#fff url(/media/export/images/block_left_blue_bg.png) bottom repeat-x; border:1px solid #c7d6ef; width:604px; margin:0 0 20px; padding:20px 17px 14px; position:relative; -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px;}
+
+
+
+
+/*
+CATEGORY
+===============================================================================================================*/
+.b-heading { width:100%; overflow:hidden; margin:0 0 10px; position:relative; padding:10px 0 0;}
+.b-heading .pic { float:left; width:64px; height:64px; margin-right:-100%;}
+.b-heading .pic img {display:block;}
+.b-heading h2 { margin:0 0 0 76px; color:#ff9600; padding:20px 0 0; font: 22px/20px Tahoma, Geneva, sans-serif;}
+
+.b-pathway {position:absolute; top:0; left:77px; width:555px; text-indent:-3px; line-height:14px;}
+.b-pathway a, .b-pathway a:hover {margin:0 3px; color:#0052db; font: 11px Tahoma, Geneva, sans-serif;}
+.b-pathway span { margin-left:3px; font: 11px Tahoma, Geneva, sans-serif;}
+
+/*-- category rubricator --------------------------------------------------------------------*/
+.b-box_rubrics {width:604px; overflow:hidden; -moz-border-radius: 5px; -khtml-border-radius: 5px; -webkit-border-radius: 5px;}
+.b-box_rubrics ul{ padding:0 20px 1px 0; width:180px; float:left; position:relative; margin:0; padding:0; list-style:none outside;}
+.b-box_rubrics li { padding:0 0 7px;}
+.b-box_rubrics li a { font: 11px Tahoma, Geneva, sans-serif; color:#0052DB;}
+.b-box_rubrics li a:hover {text-decoration:none; color:#0052DB;}
+.b-box_rubrics li span { padding:0 0 0 2px; color:#7c9bd4; font-size:10px;}
+
+/*-- holiday ---------------------------------------------------------------------------*/
+.holiday-info { width:100%; overflow:hidden; margin:-3px 0 2px;}
+.holiday-info h4 { font:12px Tahoma, Geneva, sans-serif; line-height:16px; color:#333; font-weight:bold; float:left;}
+.holiday-info a { float:right; line-height:15px; color:#0052DB; font:11px Tahoma, Geneva, sans-serif;}
+
+/*-- left block category --------------------------------------------------------------------*/
+.b-box_category { padding-top:5px; padding-bottom:10px; border:none;}
+.b-box_category .b-sort { padding:3px 0 10px; font: 11px Tahoma, Geneva, sans-serif;}
+.b-box_category .b-sort a {color:#0052DB;}
+.b-box_category .b-sort a:hover {color:#0052DB;}
+.b-count { float:right; padding:3px 0 0; font: 11px Tahoma, Geneva, sans-serif;}
+
+
+
+
+/*
+CALENDAR
+===============================================================================================================*/
+/*-- month list --------------------------------------------------------------------*/
+.b-box_months {width:906px; overflow:hidden;}
+.b-box_months ul{ padding:0 20px 0 0; margin:0; list-style:none outside; width:130px; float:left; position:relative;}
+.b-box_months li { padding:0 0 7px;}
+.b-box_months li a, .b-box_months li a:hover {color:#0052db; font:11px Tahoma, Geneva, sans-serif;}
+
+/*-- calendar ----------------------------------------------------------------------*/
+.b-calendar { border:1px solid #c4d3ee; width:940px; padding:0;}
+.b-calendar table {border-collapse:collapse;}
+.b-calendar th {color:#aab7ce; font:normal 11px Tahoma, Geneva, sans-serif; background:#cce5f1 url(/media/export/images/calendar_head_bg.png) repeat-x; height:28px; border:none; border-right:1px solid #dde5e9; border-collapse:collapse; vertical-align:middle; text-align:center;}
+.b-calendar td { border:solid #eee; border-width:1px 1px 0 0; border-collapse:collapse; background:#fff url(/media/export/images/calendar_day_bg.png) repeat-x bottom; width:14%; font:11px Tahoma, Geneva, sans-serif; vertical-align:top;}
+.b-calendar td span { background:#e9eff8; display:block; padding:5px 0; width:22px; text-align:center;}
+.b-calendar ul { clear:both; margin:8px 0 20px 9px; padding:0; list-style:none outside;}
+.b-calendar li { margin:0 0 8px; padding:0 5px 0 10px; text-indent:-13px;}
+.b-calendar li a, .b-calendar li a:hover {color:#0052db;}
+.b-calendar .day-another { background:#fff; color:#999;}
+.b-calendar .day-another span { background:#f1f1f1; color:#000;}
+.b-calendar .day-another a { color:#999;}
+.b-calendar .day-last { border-right:none;}
+.b-calendar .day-holiday { background:#fff url(/media/export/images/calendar_day_holiday_bg.png) repeat-x bottom; color:#b05040;}
+.b-calendar .day-holiday span{ background:#de7260; color:#fff;}
+.b-calendar .day-holiday a {color:#b05040;}
+.b-calendar .day-current { background:#d9f4c8; color:#447929;}
+.b-calendar .day-current span { background:#7db25d; color:#fff;}
+.b-calendar .day-current a {color:#447929;}
+
+
+
+
+/*
+CARD
+===============================================================================================================*/
+.card { width:100%; color:#000; margin:0 0 70px;}
+.card:after { content:''; display:block; clear:both; overflow:hidden; height:0; font-size:0;}
+.card h2 {font: 18px Tahoma, Geneva, sans-serif; color:#000;}
+.card p {margin:0; padding:0 0 10px;}
+
+.card .player { background:#f5fafc url(/media/export/images/player_bg.png) repeat-x; border:1px solid #d4e5fd; width:639px; height:80px; margin:0 0 20px; position:relative; -moz-border-radius: 10px; -khtml-border-radius: 10px; -webkit-border-radius: 10px;}
+.card .player object { position:absolute; top:17px; left:100px;}
+
+.card-text p {font: 12px Tahoma, Geneva, sans-serif;}
+.card-text { width:255px; padding-right:20px; float:left; font-size:12px; line-height:15px; margin-right:-100%;}
+.card-text h2 { margin:0 0 15px;}
+.card-text .card-theme { margin:10px 0 0; padding:0; list-style:none outside;}
+.card-text .card-theme li{ padding:0 0 10px; font: 12px Tahoma, Geneva, sans-serif;}
+.card-text .card-theme li a, .card-text .card-theme li a:hover {color:#0052db; }
+
+.card-send { margin-left:275px; padding-left:20px; border-left:1px solid #d2d1d1; font-size:12px; z-index:1;}
+.card-send h2{ margin:0 0 15px;}
+.card-send h3 { font-weight:bold; font-size:11px;}
+.card-send label { font: 11px Tahoma, Geneva, sans-serif;}
+.card-send .error { color:#c00; font: 11px Tahoma, Geneva, sans-serif;}
+
+.card-send .number { margin:10px 0 0; position:relative; width:344px; z-index:11;}
+.card-send .number input{ background:url(/media/export/images/txt_phone_bg.png) no-repeat; padding:0px 5px 0; width:306px; height:37px; border:none; vertical-align:middle; margin-left:8px; margin-right:-100%; color:#515151; font: normal 28px/35px Tahoma, Geneva, sans-serif;}
+.card-send .number .plus {font: 28px/30px Tahoma, Geneva, sans-serif; color:#515151; position:relative; top:6px;}
+.card-send .number p{ font: 11px Tahoma, Geneva, sans-serif; padding:8px 0 0 28px; color:#777; margin:0;}
+.card-send .number .error{ padding:0 0 0 28px;}
+.card-send .number h2 { margin-bottom:13px;}
+.card-send .number .select-country {background:url(/media/export/images/arrow-down.gif) no-repeat right; padding:0 10px 0 0; margin:0 20px 0 5px;}
+
+.card-send .send-time { position:relative; margin:30px 0 7px 1px; width:343px; overflow:hidden;}
+.card-send .send-time h3 {margin:0 0 7px;}
+.card-send .send-time label {margin-left:3px; position:relative; top:1px; vertical-align:middle; cursor:pointer;}
+.card-send .send-time .send-now { background:#f8fbfd url(/media/export/images/send_time_bg.png) 0 0 no-repeat; height:22px; width:88px; padding:2px 0 0 4px; float:left; position:relative; margin-right:-100%;}
+.card-send .send-time .send-after {  height:22px; width:243px; padding:2px 0 0 4px; margin:0 0 0 96px; position:relative;}
+.card-send .send-time .send-now input, .card-send .send-time .send-after input { vertical-align:middle; margin-left:5px;}
+.card-send .send-time .send-choice { background:#f8fbfd url(/media/export/images/send_choice_bg.png) no-repeat; width:329px; height:37px; padding:15px 7px 10px; display:none; overflow:hidden; position:relative; color:#000; font-weight:bold;}
+.card-send .send-time .send-choice input { background: url(/media/export/images/txt_time_bg.png) no-repeat; width:33px; height:16px; border:none; margin:0 3px; color:#7f7f7f; padding:5px 0; vertical-align:middle; text-align:center; font-size:11px;}
+.card-send .send-time .send-choice span { padding:0 3px 0 10px;}
+.card-send .send-time .send-choice p { color:#818181; margin:4px 0 0 3px; padding:0; font: 10px Tahoma, Geneva, sans-serif;}
+.card-send .send-time .send-choice .error { position:absolute; top:1px; left:8px; font-weight:normal; color:#c00;}
+.card-send .choose-time .send-now{ background:none;}
+.card-send .choose-time .send-after { background:#f8fbfd url(/media/export/images/send_bg_a.png) 0 0 no-repeat;}
+.card-send .btn {width:153px; height:45px; background:url(/media/export/images/btn_send.png) no-repeat; border:none; margin:20px 0;}
+.card-send .btn:hover { background-position:0 -45px;}
+.card-send .btn_more {background:url(/media/export/images/btn_send_more.png) no-repeat; display:block; margin:20px 0 0;}
+.card-send .btn_more:hover { background-position:0 -45px;}
+
+.card-field { width:332px; padding:5px 5px 0; margin:0 0 5px; position:relative; float:left; z-index:10;}
+.card-field input {vertical-align:middle; margin:0 4px 0 5px;}
+.card-field label { position:relative; top:1px; cursor:pointer;}
+.card-field:after { content:''; display:block; clear:both; height:0; overflow:hidden; font-size:0;}
+
+/*-- countries list ------------------------------------------------------------*/
+.b-counties-list { width:315px; height:108px; border:1px solid #c5d3ef; background:#fafdfe; z-index:13; overflow:auto; position:absolute; bottom:-118px; left:27px; display:none; -moz-border-radius: 3px; -khtml-border-radius: 3px; -webkit-border-radius: 3px;}
+.b-counties-list ul {margin:0; padding:0; list-style:none outside;}
+.b-counties-list li { position:relative; color:#777; height:22px; overflow:hidden;}
+.b-counties-list li a { color:#777; font-size:11px; text-decoration:none; padding:3px 5px; height:16px; display:block;}
+.b-counties-list li a:hover {color:#0052db;background:#e7f4fb;}
+.b-counties-list li span { position:absolute; top:3px; right:5px; display:block; font-size:11px;}
+.b-counties-list li img { margin:0 4px 0 0;}
+
+/*-- help links ------------------------------------------------------------*/
+.b-help-links { margin:0 0 20px; width:100%; overflow:hidden;}
+.b-help-links ul {margin:0; padding:0; list-style:none outside;}
+.b-help-links li { float:left; margin:0 10px 0 0;}
+.b-help-links li a, .b-help-links li a:hover {color:#0052db;}
+
+
+
+
+/*
+WINDOW
+=============================================================================================================*/
+#blocker { height:100%; width:100%; background:#000; opacity:.75; top:0; left:0; position:fixed; z-index:1000;}
+.b-window {position:fixed; top:50%; left:50%; width:538px; height:auto; margin:-220px 0 0 -258px; z-index:1002; display:none; font-size:12px;}
+.b-window .window-close { position:absolute; top:7px; right:44px; cursor:pointer;}
+.b-window h2 {font:24px Tahoma, Geneva, sans-serif; padding:0 0 15px; color:#000; margin:0;}
+.b-window p {margin:0; padding-bottom:10px; font:12px Tahoma, Geneva, sans-serif;}
+.b-window .window-top{ background:url(/media/export/images/window/top.png) no-repeat; width:538px; height:36px;}
+.b-window .window-bg  { background:url(/media/export/images/window/bg.png) repeat-y; width:438px; height:auto; padding:10px 50px; position:relative;}
+.b-window .window-btm { background:url(/media/export/images/window/btm.png) no-repeat; width:538px; height:36px;}
+.b-window_brdr { width:494px;}
+.b-window_brdr .window-close { position:absolute; top:3px; right:15px;}
+.b-window_brdr .window-top { background:url(/media/export/images/window/brdr_top.png) no-repeat; height:15px; width:100%;}
+.b-window_brdr .window-btm { background:url(/media/export/images/window/brdr_btm.png) no-repeat; height:15px; width:100%;}
+.b-window_brdr .window-bg { background:none; background-color:#fff; border:solid #aab0b8; border-width:0 4px; width:446px; padding:0 20px;}
+
+/*-- feedback -------------------------------------------------------------*/
+.feedback fieldset { border:none;}
+.feedback select { font-size:inherit; font-family:inherit; width:300px;}
+.feedback label {display: block; padding:10px 0 3px;}
+.feedback label span {color:#e05c5c; padding-left:10px; display:none;}
+.feedback input {font-size:inherit; font-family:inherit; width:297px;}
+.feedback textarea { width:297px; height:50px; font-size:inherit; font:12px Tahoma, Geneva, sans-serif;}
+.feedback input.btn { margin:10px 0 0; display:block;  font:bold 12px Arial, Helvetica, sans-serif; width:auto;}
+
+
+
+.g-hidden {display:none;}
+.g-visible { display:block;}

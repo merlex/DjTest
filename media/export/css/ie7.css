@@ -1,0 +1,17 @@
+/*
+HEADER
+===============================================================================================================*/
+.b-menu li {margin:0 7px 0 0;}
+
+
+/*
+CONTENT
+===============================================================================================================*/
+
+.b-box_rubrics ul, .b-box_months ul{ margin-bottom:-20px;}
+.b-replenish .btn input {top:15px;}
+
+#blocker{filter:  progid:DXImageTransform.Microsoft.Alpha(opacity=75);}
+
+
+
