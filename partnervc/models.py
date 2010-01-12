@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import datetime, date
 from django.utils.translation import ugettext_lazy as _
+from calendar import month
 from os.path import join
 from djtest import settings
 
@@ -29,7 +30,7 @@ class HolidayVC(models.Model):
     icon = models.URLField()
 
     def __unicode__(self):
-        return self.nameshort
+        return '%s %s-%s' % (self.nameshort,self.day,self.month)
 
 class CardVC(models.Model):
     """
