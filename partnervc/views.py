@@ -7,6 +7,7 @@ from django.template.context import RequestContext
 from partnervc.models import AdditVC
 from pprint import pprint
 import time
+
 try:
     from lxml import etree
     print("running with lxml.etree")
@@ -84,11 +85,14 @@ def export_cards(request, **kw):
         addit.append(card)
         if not card['text']:
             card['text'] = ''
-        cards = CardVC(title = card['title'],
-                       cardid = int(card['cardid']),
+        pprint(card)
+        hol = HolidayVC(id = int(card['holidayid']))
+        cat = CategoryVC(id = int(card['catid']))
+        cards = CardVC(id = int(card['cardid']),
+                       title = card['title'],
                        path = card['path'],
-                       catid = int(card['catid']),
-                       holidayid = int(card['holidayid']),
+                       catid = cat,
+                       holidayid = hol,
                        text = card['text'],
                        playtime = int(card['playtime']),
                        numorders_24 = int(card['numorders_24']),
@@ -98,7 +102,7 @@ def export_cards(request, **kw):
         cards.save()
     kw['count'] = c
     kw['addit'] = addit
-    pprint(addit)
+#    pprint(addit)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
@@ -114,7 +118,7 @@ def export_category(request, **kw):
             cat[child.tag] = child.text
         c +=1
         addit.append(cat)
-        catg = CategoryVC(catid = int(cat['catid']),
+        catg = CategoryVC(id = int(cat['catid']),
                           parentid = int(cat['parentid']),
                           nameshort = cat['nameshort'],
                           namefull = cat['namefull'],
@@ -139,7 +143,7 @@ def export_holidays(request, **kw):
             hol[child.tag] = child.text
         c +=1
         addit.append(hol)
-        hols = HolidayVC(holid = int(hol['holid']),
+        hols = HolidayVC(id = int(hol['holid']),
                          nameshort = hol['nameshort'],
                          namefull = hol['namefull'],
                          month = int(hol['month']),
@@ -153,17 +157,20 @@ def export_holidays(request, **kw):
     return render_to_response("partnervc/export_status.html", context)
 
 def main_page_view(request, **kw):
+    curdate = time.localtime(time.time())
     categories = CategoryVC.objects.order_by('parentid')
+    holidays = HolidayVC.objects.extra(where=['month=%s','day>=%s'],params=[curdate.tm_mon,curdate.tm_mday]).order_by('day','month')[:6]
     catgs = {}
     catgs2 = []
     for cat in categories:
         if cat.parentid == 0:
-            catgs[cat.catid] = {'id': cat.catid, 'name':cat.nameshort, 'childs':[]}
+            catgs[cat.id] = {'id': cat.id, 'name':cat.nameshort, 'childs':[]}
         else:
-            catgs[cat.parentid]['childs'].append({'id': cat.catid, 'name':cat.nameshort})
+            catgs[cat.parentid]['childs'].append({'id': cat.id, 'name':cat.nameshort})
     for cat in catgs:
         catgs2.append(catgs[cat])
     kw['categories'] = catgs2
-    pprint(catgs2)
+#    kw['holidays'] = holidays
+    pprint(holidays)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/main_page.html", context)
