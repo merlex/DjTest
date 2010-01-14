@@ -5,6 +5,7 @@ from djtest.partnervc.models import CategoryVC
 from djtest.partnervc.models import CardVC
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
+#from django.db.models import DoesNotExist
 from partnervc.models import AdditVC
 from pprint import pprint
 import time
@@ -51,7 +52,6 @@ def export_view(request, **kw):
         addit.append(card)
     kw['count'] = c
     kw['addit'] = addit
-    pprint(addit)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
@@ -68,12 +68,12 @@ def export_addit(request, **kw):
         a.save()
     kw['count'] = c
     kw['addit'] = addit
-    pprint(addit)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
 def export_cards(request, **kw):
     addit = []
+    CardVC.objects.all().delete()
     src = '/home/httpd/djtest/partnervc/voicecards.xml'
     tree = etree.parse(src)
     r = tree.xpath('/voicecards/additional')
@@ -86,7 +86,6 @@ def export_cards(request, **kw):
         addit.append(card)
         if not card['text']:
             card['text'] = ''
-        pprint(card)
         hol = HolidayVC(id = int(card['holidayid']))
         cat = CategoryVC(id = int(card['catid']))
         cards = CardVC(id = int(card['cardid']),
@@ -103,12 +102,18 @@ def export_cards(request, **kw):
         cards.save()
     kw['count'] = c
     kw['addit'] = addit
-#    pprint(addit)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
 def export_category(request, **kw):
     addit = []
+    CategoryVC.objects.all().delete()
+    CategoryVC(id = 0,
+               parentid = 0,
+               nameshort = '0',
+               namefull = '0',
+               catpath = '0',
+               ispublished = 0).save()
     src = '/home/httpd/djtest/partnervc/voicecards.xml'
     tree = etree.parse(src)
     r = tree.xpath('/voicecards/additional')
@@ -128,12 +133,18 @@ def export_category(request, **kw):
         catg.save()
     kw['count'] = c
     kw['addit'] = addit
-    pprint(addit)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
 def export_holidays(request, **kw):
     addit = []
+    HolidayVC.objects.all().delete()
+    HolidayVC(id = 0,
+              nameshort = '0',
+              namefull = '0',
+              month = 0,
+              day = 0,
+              icon = '0').save()
     src = '/home/httpd/djtest/partnervc/voicecards.xml'
     tree = etree.parse(src)
     r = tree.xpath('/voicecards/additional')
@@ -153,7 +164,6 @@ def export_holidays(request, **kw):
         hols.save()
     kw['count'] = c
     kw['addit'] = addit
-    pprint(addit)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
@@ -162,7 +172,8 @@ def main_page_view(request, **kw):
                     u'апреля', u'мая', u'июня', u'июля',
                     u'августа', u'сентября', u'октября', u'ноября', u'декабря']
     curdate = time.localtime(time.time())
-    categories = CategoryVC.objects.order_by('parentid')
+
+    categories = CategoryVC.objects.filter(ispublished=1).order_by('parentid')
     catgs = {}
     catgs2 = []
     for cat in categories:
@@ -172,6 +183,7 @@ def main_page_view(request, **kw):
             catgs[cat.parentid]['childs'].append({'id': cat.id, 'name':cat.nameshort})
     for cat in catgs:
         catgs2.append(catgs[cat])
+
     hols = []
     counter = 0
     for i in range(10):
@@ -193,8 +205,24 @@ def main_page_view(request, **kw):
                          'day':hol.day, 'month':months[hol.month],
                          'today':today, 'counter':c,'cards':cards})
             counter += 1
+
+    cards = CardVC.objects.order_by('-numorders_30')[:18]
+    pprint(cards)
+    cards2 = []
+    counter = 0
+    for card in cards:
+        c = 0
+        c2 = 0
+        if counter%6 == 0:
+            c = 1
+        if counter%3 == 0:
+            c2 = 1
+        cards2.append({'id': card.id, 'name':card.title, 'catid':card.catid,
+                       'counter':c,'counter2':c2})
+        counter += 1
     kw['categories'] = catgs2
     kw['holidays']   = hols
+    kw['cards']   = cards2
 #    pprint(holidays)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/main_page.html", context)
