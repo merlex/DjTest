@@ -1,3 +1,4 @@
+ # -*- coding: utf-8 -*-
 # Create your views here.
 from djtest.partnervc.models import HolidayVC
 from djtest.partnervc.models import CategoryVC
@@ -157,9 +158,11 @@ def export_holidays(request, **kw):
     return render_to_response("partnervc/export_status.html", context)
 
 def main_page_view(request, **kw):
+    months = [ u'', u'января', u'февраля', u'марта',
+                    u'апреля', u'мая', u'июня', u'июля',
+                    u'августа', u'сентября', u'октября', u'ноября', u'декабря']
     curdate = time.localtime(time.time())
     categories = CategoryVC.objects.order_by('parentid')
-    holidays = HolidayVC.objects.extra(where=['month=%s','day>=%s'],params=[curdate.tm_mon,curdate.tm_mday]).order_by('day','month')[:6]
     catgs = {}
     catgs2 = []
     for cat in categories:
@@ -169,8 +172,29 @@ def main_page_view(request, **kw):
             catgs[cat.parentid]['childs'].append({'id': cat.id, 'name':cat.nameshort})
     for cat in catgs:
         catgs2.append(catgs[cat])
+    hols = []
+    counter = 0
+    for i in range(10):
+        if len(hols) > 5:
+            break
+        holidays = HolidayVC.objects.extra(where=['(month=%s AND day>=%s) OR (month>%s AND day>0)'],
+                                           params=[curdate.tm_mon,curdate.tm_mday,curdate.tm_mon]).order_by('month','day')[i*6:(i+1)*6]
+        for hol in holidays:
+            c = 0
+            if counter%3 == 0:
+                c = 1
+            today = 0
+            if hol.day == curdate.tm_mday and hol.month == curdate.tm_mon:
+                today = 1
+            cards = CardVC.objects.filter(holidayid = hol.id).count()
+            if not cards or len(hols) > 5:
+                continue
+            hols.append({'id': hol.id, 'name':hol.nameshort, 'img':hol.icon,
+                         'day':hol.day, 'month':months[hol.month],
+                         'today':today, 'counter':c,'cards':cards})
+            counter += 1
     kw['categories'] = catgs2
-#    kw['holidays'] = holidays
-    pprint(holidays)
+    kw['holidays']   = hols
+#    pprint(holidays)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/main_page.html", context)
