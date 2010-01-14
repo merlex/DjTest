@@ -1,0 +1,9 @@
+{% extends "index.html" %}
+
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+    <h1><span class="welc">{{ blog.title }}</span></h1>
+    {{blog.publication_date|date:"d-m-Y"}} <br/>
+    <p>{{ blog.body|safe}}</p>
+{% endblock %}
