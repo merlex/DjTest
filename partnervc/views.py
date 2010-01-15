@@ -232,3 +232,4 @@ def getCardList(catg=0, sortfield='-numorders_30',count=18):
         cards2.append({'id': card.id, 'name':card.title, 'catid':card.catid,
                        'counter':c,'counter2':c2})
         counter += 1
+    return cards2
