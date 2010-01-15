@@ -217,7 +217,7 @@ def main_page_view(request, **kw):
 def getCardList(catg=0, sortfield='-numorders_30',count=18):
     """Documentation"""
     if catg:
-        cards = CardVC.objects.filter(catid=CategoryVC.objects.all(parentid=catg)).order_by(sortfield)[:count]
+        cards = CardVC.objects.filter(catid=CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % catg])).order_by(sortfield)[:count]
     else:
         cards = CardVC.objects.order_by(sortfield)[:count]
     cards2 = []
