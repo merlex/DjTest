@@ -207,9 +207,13 @@ def main_page_view(request, **kw):
             counter += 1
 
     cards = getCardList()
+    bcards = getCardList(80399)
+    jcards = getCardList(80422)
     kw['categories'] = catgs2
     kw['holidays']   = hols
-    kw['cards']   = cards
+    kw['cards']      = cards
+    kw['bcards']     = bcards
+    kw['jcards']     = jcards
 #    pprint(holidays)
     context = RequestContext(request, kw)
     return render_to_response("partnervc/main_page.html", context)
@@ -217,7 +221,10 @@ def main_page_view(request, **kw):
 def getCardList(catg=0, sortfield='-numorders_30',count=18):
     """Documentation"""
     if catg:
-        cards = CardVC.objects.filter(catid=CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % catg, catg])).order_by(sortfield)[:count]
+        catgs = ''
+        for cat in CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)]):
+            catgs +=  ','+str(cat.id)
+        cards = CardVC.objects.extra(where=[' catid_id IN(0'+catgs+')']).order_by(sortfield)[:count]
     else:
         cards = CardVC.objects.order_by(sortfield)[:count]
     cards2 = []

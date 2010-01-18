@@ -167,4 +167,176 @@ document.onunload = function(){
 					<!-- /cont -->
 				</div>
 				<!-- /block category -->
+
+
+
+<noindex>
+<script type="text/javascript">
+jQuery.extend({
+    prevbithday: function(el) {
+        if ( $("#scrollablebithday .cards-list:visible").prev('.cards-list').size() > 0  )
+        {
+            removeAllSWFFromBlock("#scrollablebithday .cards-list:visible");
+            $("#scrollablebithday .cards-list:visible").hide().prev().show();
+        }
+        return true;
+    },
+    nextbithday: function(el) {
+        if ( $("#scrollablebithday .cards-list:visible + table").size() > 0 )
+        {
+            removeAllSWFFromBlock("#scrollablebithday .cards-list:visible");
+            $("#scrollablebithday .cards-list:visible").hide().next().show();
+        }
+        return true;
+    }
+});
+<!--
+var _VcSwfDivArray = new Array();
+function show(div, id, pt) {
+  _VcSwfDivArray.push(new Array(div, id, pt));
+  swfobject.embedSWF('/media/export/flash/smallPlayer.swf', div, '66', '69', '8.0.0', '', { id: id, t:pt, base_url: 'http://www.voicecards.ru/get/track/?id=' }, { wmode: 'opaque', play: 'true' });
+}
+document.onunload = function(){
+    for (var i=0; i<_VcSwfDivArray.length; i++){
+        document.getElementById(_VcSwfDivArray[i][0]).innerHTML = '<a href="javascript:void(0)" onclick="show(\''+_VcSwfDivArray[i][0]+'\', '+_VcSwfDivArray[i][1]+', '+_VcSwfDivArray[i][2]+')"><img src="/media/export/images/player.gif" width="64" height="67" /></a>'
+    }
+}
+//-->
+</script>
+</noindex>
+<!-- block category -->
+<div class="b-box" id="scrollablebithday">
+    <ul class="ctrl-roll">
+        <li><a href="javascript:void(0);" onclick="$.prevbithday($(this))" class="prev"></a></li>
+        <li><a href="javascript:void(0);" onclick="$.nextbithday($(this))" class="next"></a></li>
+    </ul>
+    <h2>Открытки с днем рождения</h2>
+    <!-- cont -->
+    <div class="b-box__content">
+        <!-- cards list -->
+        <table class="cards-list">
+{% for card in bcards %}
+    {% if forloop.counter0 and card.counter %}
+        </tr>
+        </table>
+        <table class="cards-list" {% if card.counter %}style="display: none"{% endif %}>
+    {% endif %}
+    {% if card.counter2 %}{#($k % 3 == 0 )#}
+        {% if card.counter %}{#if ($k && $k % 6)#}
+            </tr>
+        {% endif %}
+            <tr>
+    {% endif %}
+                <td>
+                    <div class="b-card">
+                        <div class="player">
+                            <a id="repl_id_{{ card.id }}" href="javascript:void(0)" onclick="show('repl_id_{{ card.id }}', {{ card.id }})">
+                                <img src="/media/export/images/player.gif" width="64" height="67" alt="слушать" />
+                            </a>
+                        </div>
+                        <div class="card-info">
+                            <h4><a href="/voice/card/{{ card.id }}">{{ card.name }}</a></h4>
+                            {% if card.catid.id %}
+                            <p class="theme"><a href="/voice/category/{{card.catid.id}}">{{ card.catid.nameshort }}</a></p>
+                            {% endif %}
+                            <p class="send"><a href="/voice/card/{{ card.id }}">отправить</a></p>
+                        </div>
+                    </div>
+                </td>
+{% endfor %}
+            </table>
+						<!-- /cards list -->
+
+						<p class="all-cards"><a href="/voice/category/popular">Все открытки с днем рождения</a></p>
+
+					</div>
+					<!-- /cont -->
+				</div>
+				<!-- /block category -->
+
+
+<noindex>
+<script type="text/javascript">
+jQuery.extend({
+    prevjoke: function(el) {
+        if ( $("#scrollablejoke .cards-list:visible").prev('.cards-list').size() > 0  )
+        {
+            removeAllSWFFromBlock("#scrollablejoke .cards-list:visible");
+            $("#scrollablejoke .cards-list:visible").hide().prev().show();
+        }
+        return true;
+    },
+    nextjoke: function(el) {
+        if ( $("#scrollablejoke .cards-list:visible + table").size() > 0 )
+        {
+            removeAllSWFFromBlock("#scrollablejoke .cards-list:visible");
+            $("#scrollablejoke .cards-list:visible").hide().next().show();
+        }
+        return true;
+    }
+});
+<!--
+var _VcSwfDivArray = new Array();
+function show(div, id, pt) {
+  _VcSwfDivArray.push(new Array(div, id, pt));
+  swfobject.embedSWF('/media/export/flash/smallPlayer.swf', div, '66', '69', '8.0.0', '', { id: id, t:pt, base_url: 'http://www.voicecards.ru/get/track/?id=' }, { wmode: 'opaque', play: 'true' });
+}
+document.onunload = function(){
+    for (var i=0; i<_VcSwfDivArray.length; i++){
+        document.getElementById(_VcSwfDivArray[i][0]).innerHTML = '<a href="javascript:void(0)" onclick="show(\''+_VcSwfDivArray[i][0]+'\', '+_VcSwfDivArray[i][1]+', '+_VcSwfDivArray[i][2]+')"><img src="/media/export/images/player.gif" width="64" height="67" /></a>'
+    }
+}
+//-->
+</script>
+</noindex>
+<!-- block category -->
+<div class="b-box" id="scrollablejoke">
+    <ul class="ctrl-roll">
+        <li><a href="javascript:void(0);" onclick="$.prevjoke($(this))" class="prev"></a></li>
+        <li><a href="javascript:void(0);" onclick="$.nextjoke($(this))" class="next"></a></li>
+    </ul>
+    <h2>Популярные розыгрыши</h2>
+    <!-- cont -->
+    <div class="b-box__content">
+        <!-- cards list -->
+        <table class="cards-list">
+{% for card in jcards %}
+    {% if forloop.counter0 and card.counter %}
+        </tr>
+        </table>
+        <table class="cards-list" {% if card.counter %}style="display: none"{% endif %}>
+    {% endif %}
+    {% if card.counter2 %}{#($k % 3 == 0 )#}
+        {% if card.counter %}{#if ($k && $k % 6)#}
+            </tr>
+        {% endif %}
+            <tr>
+    {% endif %}
+                <td>
+                    <div class="b-card">
+                        <div class="player">
+                            <a id="repl_id_{{ card.id }}" href="javascript:void(0)" onclick="show('repl_id_{{ card.id }}', {{ card.id }})">
+                                <img src="/media/export/images/player.gif" width="64" height="67" alt="слушать" />
+                            </a>
+                        </div>
+                        <div class="card-info">
+                            <h4><a href="/voice/card/{{ card.id }}">{{ card.name }}</a></h4>
+                            {% if card.catid.id %}
+                            <p class="theme"><a href="/voice/category/{{card.catid.id}}">{{ card.catid.nameshort }}</a></p>
+                            {% endif %}
+                            <p class="send"><a href="/voice/card/{{ card.id }}">отправить</a></p>
+                        </div>
+                    </div>
+                </td>
+{% endfor %}
+            </table>
+						<!-- /cards list -->
+
+						<p class="all-cards"><a href="/voice/category/popular">Все популярные розыгрыши</a></p>
+
+					</div>
+					<!-- /cont -->
+				</div>
+				<!-- /block category -->
 {% endblock %}
+
