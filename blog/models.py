@@ -3,6 +3,7 @@ from django.contrib import admin
 from datetime import datetime, date
 from django.utils.translation import ugettext_lazy as _
 from os.path import join
+from tagging.fields import TagField
 from djtest import settings
 
 # Create your models here.
@@ -11,7 +12,8 @@ class Blog(models.Model):
     slug = models.SlugField(_("slug"), max_length=255, db_index=True, unique=False)
     body = models.TextField(_("body"))
     publication_date = models.DateField()
-
+    tags = TagField()
+    
     def __unicode__(self):
         return self.title
 

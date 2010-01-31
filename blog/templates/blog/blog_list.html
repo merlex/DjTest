@@ -4,7 +4,7 @@
 
 {% block content %}
         <h1><span class="welc"></span></h1>
-    {% for blog in blog_list %}
+{% for blog in blog_list %}
         {{blog.publication_date|date:"d-m-Y"}} <a href="{{ blog.slug }}">{{ blog.title }}</a><br/>
         <p>{{ blog.body|safe|truncatewords:"2" }}</p>
     {% endfor %}
