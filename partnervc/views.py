@@ -91,8 +91,6 @@ def export_cards(request, **kw):
         cards = CardVC(id = int(card['cardid']),
                        title = card['title'],
                        path = card['path'],
-                       catid = cat,
-                       holidayid = hol,
                        text = card['text'],
                        playtime = int(card['playtime']),
                        numorders_24 = int(card['numorders_24']),
@@ -102,6 +100,22 @@ def export_cards(request, **kw):
         cards.save()
     kw['count'] = c
     kw['addit'] = addit
+    context = RequestContext(request, kw)
+    return render_to_response("partnervc/export_status.html", context)
+
+def export_card2cat(request, **kw):
+    src = '/home/httpd/djtest/partnervc/voicecards.xml'
+    tree = etree.parse(src)
+    r = tree.xpath('/voicecards/additional')
+    c = 0
+    for element in tree.xpath("/voicecards/catalogs/catalog"):
+        if not card['text']:
+            card['text'] = ''
+        cat = CategoryVC(id = int(card['catalogid']))
+        cards = CardVC(id = int(card['contentid']))
+        cards.cats.add(cat)
+        cards.save()
+    kw['count'] = c
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
 
@@ -174,6 +188,56 @@ def main_page_view(request, **kw):
     curdate = time.localtime(time.time())
 
     categories = CategoryVC.objects.filter(ispublished=1).order_by('parentid')
+    catgs = {}
+    catgs2 = []
+    for cat in categories:
+        if cat.parentid == 0:
+            catgs[cat.id] = {'id': cat.id, 'name':cat.nameshort, 'childs':[]}
+        else:
+            catgs[cat.parentid]['childs'].append({'id': cat.id, 'name':cat.nameshort})
+    for cat in catgs:
+        catgs2.append(catgs[cat])
+
+    hols = []
+    counter = 0
+    for i in range(10):
+        if len(hols) > 5:
+            break
+        holidays = HolidayVC.objects.extra(where=['(month=%s AND day>=%s) OR (month>%s AND day>0)'],
+                                           params=[curdate.tm_mon,curdate.tm_mday,curdate.tm_mon]).order_by('month','day')[i*6:(i+1)*6]
+        for hol in holidays:
+            c = 0
+            if counter%3 == 0:
+                c = 1
+            today = 0
+            if hol.day == curdate.tm_mday and hol.month == curdate.tm_mon:
+                today = 1
+            cards = CardVC.objects.filter(holidayid = hol.id).count()
+            if not cards or len(hols) > 5:
+                continue
+            hols.append({'id': hol.id, 'name':hol.nameshort, 'img':hol.icon,
+                         'day':hol.day, 'month':months[hol.month],
+                         'today':today, 'counter':c,'cards':cards})
+            counter += 1
+
+    cards = getCardList()
+    bcards = getCardList(80399)
+    jcards = getCardList(80422)
+    kw['categories'] = catgs2
+    kw['holidays']   = hols
+    kw['cards']      = cards
+    kw['bcards']     = bcards
+    kw['jcards']     = jcards
+#    pprint(holidays)
+    context = RequestContext(request, kw)
+    return render_to_response("partnervc/main_page.html", context)
+
+def category_page_view(request, **kw):
+    curdate = time.localtime(time.time())
+    if kw['cat_id'] > 0:
+        categories = CategoryVC.objects.filter(ispublished=1,parentid=kw['cat_id']).order_by('parentid')
+    else:
+        categories = CategoryVC.objects.filter(ispublished=1).order_by('parentid')
     catgs = {}
     catgs2 = []
     for cat in categories:

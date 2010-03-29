@@ -38,8 +38,10 @@ class CardVC(models.Model):
     """
     title = models.CharField(max_length=255)
     path = models.CharField(max_length=255)
-    catid = models.ForeignKey(CategoryVC)
-    holidayid = models.ForeignKey(HolidayVC)
+#    catid = models.ForeignKey(CategoryVC)
+#    holidayid = models.ForeignKey(HolidayVC)
+    cats = models.ManyToManyField(CategoryVC)
+    holidays = models.ManyToManyField(HolidayVC)
     text = models.TextField(_("text"))
     playtime = models.IntegerField()
     numorders_24 = models.IntegerField()
