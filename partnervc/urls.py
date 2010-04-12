@@ -8,4 +8,5 @@ urlpatterns = patterns('partnervc.views',
     (r'^export/cards/$', 'export_cards', {'message': 'urls.py => export cards'}),
     (r'^export/category/$', 'export_category', {'message': 'urls.py => export category'}),
     (r'^export/holidays/$', 'export_holidays', {'message': 'urls.py => export holidays'}),
+    (r'^export/card2cat/$', 'export_card2cat', {'message': 'urls.py => export cards'}),
 )

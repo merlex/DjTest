@@ -3,6 +3,7 @@
 from djtest.partnervc.models import HolidayVC
 from djtest.partnervc.models import CategoryVC
 from djtest.partnervc.models import CardVC
+from django.db.models import Q
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 #from django.db.models import DoesNotExist
@@ -109,12 +110,16 @@ def export_card2cat(request, **kw):
     r = tree.xpath('/voicecards/additional')
     c = 0
     for element in tree.xpath("/voicecards/catalogs/catalog"):
-        if not card['text']:
-            card['text'] = ''
+        card = {}
+        for child in element.iterchildren():
+            card[child.tag] = child.text
+        c +=1
+        pprint(card)
         cat = CategoryVC(id = int(card['catalogid']))
-        cards = CardVC(id = int(card['contentid']))
+        cards = CardVC(id = int(card['contentid']),playtime = int(0),
+                       numorders_24 = 0, numorders_7 = 0, numorders_30 = 0)
         cards.cats.add(cat)
-        cards.save()
+        #cards.save()
     kw['count'] = c
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
@@ -212,7 +217,7 @@ def main_page_view(request, **kw):
             today = 0
             if hol.day == curdate.tm_mday and hol.month == curdate.tm_mon:
                 today = 1
-            cards = CardVC.objects.filter(holidayid = hol.id).count()
+            cards = CardVC.objects.filter(cats__id = hol.id).count()
             if not cards or len(hols) > 5:
                 continue
             hols.append({'id': hol.id, 'name':hol.nameshort, 'img':hol.icon,
@@ -262,7 +267,7 @@ def category_page_view(request, **kw):
             today = 0
             if hol.day == curdate.tm_mday and hol.month == curdate.tm_mon:
                 today = 1
-            cards = CardVC.objects.filter(holidayid = hol.id).count()
+            cards = CardVC.objects.filter(cats__id = hol.id).count()
             if not cards or len(hols) > 5:
                 continue
             hols.append({'id': hol.id, 'name':hol.nameshort, 'img':hol.icon,
@@ -285,14 +290,17 @@ def category_page_view(request, **kw):
 def getCardList(catg=0, sortfield='-numorders_30',count=18):
     """Documentation"""
     if catg:
-        catgs = ''
-        for cat in CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)]):
-            catgs +=  ','+str(cat.id)
-        cards = CardVC.objects.extra(where=[' catid_id IN(0'+catgs+')']).order_by(sortfield)[:count]
+        catgs = CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)])
+#        catgs = ''
+#        for cat in CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)]):
+#            catgs +=  ','+str(cat.id)
+#        cards = CardVC.objects.extra(where=[' catid_id IN(0'+catgs+')']).order_by(sortfield)[:count]
+        cards = CardVC.objects.filter(Q(cats__id = catg)|Q(cats__parentid = catg)).order_by(sortfield)[:count]
     else:
         cards = CardVC.objects.order_by(sortfield)[:count]
     cards2 = []
     counter = 0
+    pprint(cards)
     for card in cards:
         c = 0
         c2 = 0
@@ -300,7 +308,8 @@ def getCardList(catg=0, sortfield='-numorders_30',count=18):
             c = 1
         if counter%3 == 0:
             c2 = 1
-        cards2.append({'id': card.id, 'name':card.title, 'catid':card.catid,
+        #catid = card.cats.all()[0].id
+        cards2.append({'id': card.id, 'name':card.title, 'catid':1,
                        'counter':c,'counter2':c2})
         counter += 1
     return cards2
