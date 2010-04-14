@@ -109,17 +109,25 @@ def export_card2cat(request, **kw):
     tree = etree.parse(src)
     r = tree.xpath('/voicecards/additional')
     c = 0
+    cats = {}
     for element in tree.xpath("/voicecards/catalogs/catalog"):
         card = {}
         for child in element.iterchildren():
             card[child.tag] = child.text
         c +=1
-        pprint(card)
-        cat = CategoryVC(id = int(card['catalogid']))
-        cards = CardVC(id = int(card['contentid']),playtime = int(0),
+        try:
+            cats[card['contentid']].append(card['catalogid'])
+        except KeyError:
+            cats[card['contentid']] = [card['catalogid']]
+    for k in cats.keys():
+        cat = CategoryVC.objects.filter(id__in = cats[k])
+        hol = HolidayVC.objects.filter(id__in = cats[k])
+        cards = CardVC(id = int(k),playtime = int(0),
                        numorders_24 = 0, numorders_7 = 0, numorders_30 = 0)
-        cards.cats.add(cat)
-        #cards.save()
+        if cat:
+            cards.cats.add(cat)
+        if hol:
+            cards.holidays.add(hol)
     kw['count'] = c
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
