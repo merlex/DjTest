@@ -109,25 +109,19 @@ def export_card2cat(request, **kw):
     tree = etree.parse(src)
     r = tree.xpath('/voicecards/additional')
     c = 0
-    cats = {}
     for element in tree.xpath("/voicecards/catalogs/catalog"):
         card = {}
         for child in element.iterchildren():
             card[child.tag] = child.text
         c +=1
-        try:
-            cats[card['contentid']].append(card['catalogid'])
-        except KeyError:
-            cats[card['contentid']] = [card['catalogid']]
-    for k in cats.keys():
-        cat = CategoryVC.objects.filter(id__in = cats[k])
-        hol = HolidayVC.objects.filter(id__in = cats[k])
-        cards = CardVC(id = int(k),playtime = int(0),
+        #pprint(card)
+        cat = CategoryVC(id = int(card['catalogid']))
+        hol = HolidayVC(id = int(card['catalogid']))
+        cards = CardVC(id = int(card['contentid']),playtime = int(0),
                        numorders_24 = 0, numorders_7 = 0, numorders_30 = 0)
-        if cat:
-            cards.cats.add(cat)
-        if hol:
-            cards.holidays.add(hol)
+        cards.cats.add(cat)
+        cards.holidays.add(hol)
+        #cards.save()
     kw['count'] = c
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
@@ -303,12 +297,11 @@ def getCardList(catg=0, sortfield='-numorders_30',count=18):
 #        for cat in CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)]):
 #            catgs +=  ','+str(cat.id)
 #        cards = CardVC.objects.extra(where=[' catid_id IN(0'+catgs+')']).order_by(sortfield)[:count]
-        cards = CardVC.objects.filter(Q(cats__id = catg)|Q(cats__parentid = catg)).order_by(sortfield)[:count]
+        cards = CardVC.objects.select_related().filter(Q(cats__id = catg)|Q(cats__parentid = catg)).order_by(sortfield)[:count]
     else:
-        cards = CardVC.objects.order_by(sortfield)[:count]
+        cards = CardVC.objects.select_related().order_by(sortfield)[:count]
     cards2 = []
     counter = 0
-    pprint(cards)
     for card in cards:
         c = 0
         c2 = 0
@@ -316,8 +309,16 @@ def getCardList(catg=0, sortfield='-numorders_30',count=18):
             c = 1
         if counter%3 == 0:
             c2 = 1
-        #catid = card.cats.all()[0].id
-        cards2.append({'id': card.id, 'name':card.title, 'catid':1,
+        try:
+            catid = card.cats.all()[0]
+        except IndexError:
+            try:
+                catid = card.holidays.all()[0]
+            except IndexError:
+                catid = 0
+        pprint(catid)
+        pprint(counter)
+        cards2.append({'id': card.id, 'name':card.title, 'catid':catid,
                        'counter':c,'counter2':c2})
         counter += 1
     return cards2
