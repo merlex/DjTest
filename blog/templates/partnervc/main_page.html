@@ -150,8 +150,12 @@ document.onunload = function(){
                         </div>
                         <div class="card-info">
                             <h4><a href="/voice/card/{{ card.id }}">{{ card.name }}</a></h4>
-                            {% if card.catid.id %}
+                            {% if card.catid.catpath %}
                             <p class="theme"><a href="/voice/category/{{card.catid.id}}">{{ card.catid.nameshort }}</a></p>
+                            {% else %}
+                                {% if card.catid.icon %}
+                                <p class="theme"><a href="/voice/holiday/{{card.catid.id}}">{{ card.catid.nameshort }}</a></p>
+                                {% endif %}
                             {% endif %}
                             <p class="send"><a href="/voice/card/{{ card.id }}">отправить</a></p>
                         </div>
