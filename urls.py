@@ -9,6 +9,7 @@ urlpatterns = patterns('',
     # (r'^djtest/', include('djtest.foo.urls')),
     (r'^blog/', include('blog.urls')),
     (r'^voice/', include('partnervc.urls')),
+    (r'^accounts/', include('accounts.urls')),
 #    (r'^forum/', include('pybb.urls')),
 
     # Uncomment the admin/doc line below and add 'django.contrib.admindocs' 

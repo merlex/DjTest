@@ -1,3 +1,6 @@
+from os import path
+
+PROJECT_ROOT = path.dirname(path.abspath(__file__))
 # Django settings for djtest project.
 
 DEBUG = True
@@ -35,7 +38,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/httpd/djtest/media/'
+MEDIA_ROOT = PROJECT_ROOT+'/media/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -60,18 +63,28 @@ TEMPLATE_LOADERS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'publicauth.PublicBackend',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.auth',
+    'django.core.context_processors.request',
+    'django.core.context_processors.media',
+    #'django.contrib.messages.context_processors.messages',
+)
+
 ROOT_URLCONF = 'djtest.urls'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    '/home/httpd/djtest/templates',
+    path.join(PROJECT_ROOT, 'templates'),
 )
 
 INSTALLED_APPS = (
@@ -86,4 +99,12 @@ INSTALLED_APPS = (
     'djtest.blog',
     'south',
     'partnervc',
+    'publicauth',
 )
+SESSION_COOKIE_NAME = 'djtest'
+
+#MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
+
+#LOGIN_REDIRECT_URL = '/'
+#LOGOUT_URL = '/'
+#LOGIN_URL = "/auth/login/"

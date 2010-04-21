@@ -8,16 +8,21 @@
     {{blog.publication_date|date:"d-m-Y"}} <br/>
     <p>{{ blog.body|safe}}</p>
     <div class="comments">
+    <table>
     {% get_comment_list for blog as comment_list %}
     {% for comment in comment_list %}
-        {{ comment.user_url }}
+        <tr>
+        <td>{{ comment.user_name }}<br>{{ comment.user_email }}<br>{{ comment.user_url }}</td>
+        <td>{{ comment.submit_date|date:"d-m-Y"}}<br><p>{{ comment.comment }}</p></td>
+        </tr>
     {% endfor %}
+    </table>
     {% get_comment_form for blog as form %}
         <form action="{% comment_form_target %}" method="post">
         <table>
             <input type="hidden" name="next" value="/blog/{{blog.slug}}/" />
             {{ form }}
-            <input type="submit" name="preview" class="submit-post" value="Preview">
+            <tr><td colspan="2"><input type="submit" name="preview" class="submit-post" value="Preview">
             </td></tr></table>
         </form>
     </div>
