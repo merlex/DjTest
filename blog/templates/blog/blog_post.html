@@ -34,6 +34,8 @@
                     {{ field.errors }}
                     {{ field.label_tag }}: {{ field }}
                 </div>
+                {% else %}
+                    {{ field }}
                 {% endif %}
             {% endfor %}
             <p><input type="submit" name="post" class="submit-post" value="Preview"></p>
