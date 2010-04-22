@@ -1,11 +1,14 @@
 {% extends "index.html" %}
+{% load comments %}
 
 {% block title %}Blog{% endblock %}
 
 {% block content %}
         <h1><span class="welc"></span></h1>
-{% for blog in blog_list %}
+    {% for blog in blog_list %}
+        {% get_comment_count for blog as comment_count %}
         {{blog.publication_date|date:"d-m-Y"}} <a href="/blog/{{ blog.slug }}">{{ blog.title }}</a><br/>
         <p>{{ blog.body|safe|truncatewords:"2" }}</p>
+        <p>Comments: {{comment_count}}</p>
     {% endfor %}
 {% endblock %}

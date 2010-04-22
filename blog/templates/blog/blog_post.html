@@ -5,25 +5,39 @@
 
 {% block content %}
     <h1><span class="welc">{{ blog.title }}</span></h1>
-    {{blog.publication_date|date:"d-m-Y"}} <br/>
+    <p>{{blog.publication_date|date:"d-m-Y"}}</p>
     <p>{{ blog.body|safe}}</p>
     <div class="comments">
     <table>
     {% get_comment_list for blog as comment_list %}
     {% for comment in comment_list %}
         <tr>
-        <td>{{ comment.user_name }}<br>{{ comment.user_email }}<br>{{ comment.user_url }}</td>
-        <td>{{ comment.submit_date|date:"d-m-Y"}}<br><p>{{ comment.comment }}</p></td>
+        <td>{{ comment.submit_date|date:"d-m-Y"}}<br>
+            <strong>{{ comment.user_name }}</strong><br>
+            <a id="comment_url" href="{{ comment.user_url }}" title="{{ comment.user_url }}">Site</a><br>
+            <a id="comment_email" href="mailto:{{ comment.user_email }}" title="{{ comment.user_email }}">Email</a>
+        </td>
+        <td><p>{{ comment.comment }}</p></td>
+        </tr>
+        <tr>
+        <td colspan=2><hr></td>
         </tr>
     {% endfor %}
     </table>
+    {% if user.is_authenticated %}
     {% get_comment_form for blog as form %}
         <form action="{% comment_form_target %}" method="post">
-        <table>
             <input type="hidden" name="next" value="/blog/{{blog.slug}}/" />
-            {{ form }}
-            <tr><td colspan="2"><input type="submit" name="preview" class="submit-post" value="Preview">
-            </td></tr></table>
+            {% for field in form %}
+                {% if not field.is_hidden %}
+                <div class="fieldWrapper">
+                    {{ field.errors }}
+                    {{ field.label_tag }}: {{ field }}
+                </div>
+                {% endif %}
+            {% endfor %}
+            <p><input type="submit" name="post" class="submit-post" value="Preview"></p>
         </form>
+    {% endif %}
     </div>
 {% endblock %}

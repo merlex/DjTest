@@ -39,10 +39,19 @@ def login(request, **kw):
 def logout(request, **kw):
     auth.logout(request)
     return HttpResponseRedirect("/accounts/loggedout/")
+    
 def loggedin(request, **kw):
     if request.user.is_authenticated():
         context = RequestContext(request, kw)
         return render_to_response("accounts/account.html", context)
     else:
         return HttpResponseRedirect("/account/login/")
+        
+def invalid(request, **kw):
+    if request.user.is_authenticated():
+        context = RequestContext(request, kw)
+        return render_to_response("accounts/account.html", context)
+    else:
+        return HttpResponseRedirect("/account/login/")
+
 
