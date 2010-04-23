@@ -115,25 +115,21 @@ def export_card2cat(request, **kw):
         for child in element.iterchildren():
             card[child.tag] = child.text
         c +=1
-        #pprint(card)
-#        cat = CategoryVC(id = int(card['catalogid']))
-#        hol = HolidayVC(id = int(card['catalogid']))
         try:
             cats[card['contentid']].append(card['catalogid'])
         except KeyError:
             cats[card['contentid']] = [card['catalogid'],]
     for cardid in cats:
-        cat = CategoryVC.objects.filter(id__in = cats[cardid])
-        hol = HolidayVC.objects.filter(id__in = cats[cardid])
+        rcats = CategoryVC.objects.filter(id__in = cats[cardid])
+        rhols = HolidayVC.objects.filter(id__in = cats[cardid])
         cards = CardVC(id = int(cardid),playtime = int(0),
                        numorders_24 = 0, numorders_7 = 0, numorders_30 = 0)
-        if cat:
-            cards.cats.add(cat)
-        if hol:
-            cards.holidays.add(hol)
-        #raise NameError(hol)
-        #cards.save()
-    raise NameError('HiThere')
+        if rcats:
+            for cat in rcats:
+                cards.cats.add(cat)
+        if rhols:
+            for hol in rhols:
+                cards.holidays.add(hol)
     kw['count'] = c
     context = RequestContext(request, kw)
     return render_to_response("partnervc/export_status.html", context)
@@ -231,14 +227,15 @@ def main_page_view(request, **kw):
             today = 0
             if hol.day == curdate.tm_mday and hol.month == curdate.tm_mon:
                 today = 1
-            cards = CardVC.objects.filter(cats__id = hol.id).count()
+            #cards = CardVC.objects.filter(holidays__id = hol.id).count()
+            cards = hol.cardvc_set.count()
             if not cards or len(hols) > 5:
                 continue
             hols.append({'id': hol.id, 'name':hol.nameshort, 'img':hol.icon,
                          'day':hol.day, 'month':months[hol.month],
                          'today':today, 'counter':c,'cards':cards})
             counter += 1
-
+    #raise NameError('HiThere')
     cards = getCardList()
     bcards = getCardList(80399)
     jcards = getCardList(80422)
@@ -252,11 +249,11 @@ def main_page_view(request, **kw):
     return render_to_response("partnervc/main_page.html", context)
 
 def category_page_view(request, **kw):
+    months = [ u'', u'января', u'февраля', u'марта',
+                    u'апреля', u'мая', u'июня', u'июля',
+                    u'августа', u'сентября', u'октября', u'ноября', u'декабря']
     curdate = time.localtime(time.time())
-    if kw['cat_id'] > 0:
-        categories = CategoryVC.objects.filter(ispublished=1,parentid=kw['cat_id']).order_by('parentid')
-    else:
-        categories = CategoryVC.objects.filter(ispublished=1).order_by('parentid')
+    categories = CategoryVC.objects.filter(ispublished=1).order_by('parentid')
     catgs = {}
     catgs2 = []
     for cat in categories:
@@ -266,7 +263,7 @@ def category_page_view(request, **kw):
             catgs[cat.parentid]['childs'].append({'id': cat.id, 'name':cat.nameshort})
     for cat in catgs:
         catgs2.append(catgs[cat])
-
+    del catgs
     hols = []
     counter = 0
     for i in range(10):
@@ -281,37 +278,50 @@ def category_page_view(request, **kw):
             today = 0
             if hol.day == curdate.tm_mday and hol.month == curdate.tm_mon:
                 today = 1
-            cards = CardVC.objects.filter(cats__id = hol.id).count()
+            cards = hol.cardvc_set.count()
             if not cards or len(hols) > 5:
                 continue
             hols.append({'id': hol.id, 'name':hol.nameshort, 'img':hol.icon,
                          'day':hol.day, 'month':months[hol.month],
                          'today':today, 'counter':c,'cards':cards})
             counter += 1
-
-    cards = getCardList()
-    bcards = getCardList(80399)
-    jcards = getCardList(80422)
+    del cards
+    #raise NameError('HiThere')
+    page = request.GET.get('page',1)
+    if kw['catid'] >0:
+        cards     = getCardList(kw['catid'],'-numorders_30',15,int(page)-1)
+        category  = CategoryVC.objects.get(id=kw['catid'])
+        cardcount = CardVC.objects.select_related().filter(Q(cats__id = kw['catid'])|Q(cats__parentid = kw['catid'])).count()
+        subcats   = CategoryVC.objects.select_related().filter(parentid = kw['catid'])
+        if not subcats:
+            subcats   = CategoryVC.objects.select_related().filter(parentid = category.parentid)
+        
+    else:
+        cards = getCardList(0,'-numorders_30',15,int(page)-1)
+        cardcount = CardVC.objects.count()
+    raise NameError('HiThere'+str(len(cards)))
     kw['categories'] = catgs2
     kw['holidays']   = hols
+    kw['category']   = category
+    kw['subcats']    = subcats
+    kw['cardcount']  = cardcount
+    kw['page']       = int(page)
+    kw['pagecount']  = int(cardcount/15)+1
+    if kw['pagecount']>12:
+        kw['pages']      = xrange(12)
+    else:
+        kw['pages']      = xrange(int(cardcount/15)+1)
     kw['cards']      = cards
-    kw['bcards']     = bcards
-    kw['jcards']     = jcards
 #    pprint(holidays)
     context = RequestContext(request, kw)
-    return render_to_response("partnervc/main_page.html", context)
+    return render_to_response("partnervc/category_page.html", context)
 
-def getCardList(catg=0, sortfield='-numorders_30',count=18):
+def getCardList(catg=0, sortfield='-numorders_30', count=18, start=0):
     """Documentation"""
     if catg:
-        catgs = CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)])
-#        catgs = ''
-#        for cat in CategoryVC.objects.extra(where=['id = %s OR parentid = %s' % (catg, catg)]):
-#            catgs +=  ','+str(cat.id)
-#        cards = CardVC.objects.extra(where=[' catid_id IN(0'+catgs+')']).order_by(sortfield)[:count]
-        cards = CardVC.objects.select_related().filter(Q(cats__id = catg)|Q(cats__parentid = catg)).order_by(sortfield)[:count]
+        cards = CardVC.objects.select_related().filter(Q(cats__id = catg)|Q(cats__parentid = catg)).order_by(sortfield)[start:start+count]
     else:
-        cards = CardVC.objects.select_related().order_by(sortfield)[:count]
+        cards = CardVC.objects.select_related().order_by(sortfield)[start:start+count]
     cards2 = []
     counter = 0
     for card in cards:
@@ -328,8 +338,6 @@ def getCardList(catg=0, sortfield='-numorders_30',count=18):
                 catid = card.holidays.all()[0]
             except IndexError:
                 catid = 0
-        pprint(catid)
-        pprint(counter)
         cards2.append({'id': card.id, 'name':card.title, 'catid':catid,
                        'counter':c,'counter2':c2})
         counter += 1

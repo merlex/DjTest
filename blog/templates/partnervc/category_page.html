@@ -1,0 +1,200 @@
+{% extends "shablon.html" %}
+
+{% block rubricator %}
+<div class="b-side">
+    <h2>Открытки по темам</h2>
+    <!-- block content -->
+    <div class="b-side__content b-side__content_themes">
+        <ul class="b-themes">
+	<!-- round block -->
+            {% for category in categories %}
+            <li>
+    	        <img src="/media/export/images/blank.gif">
+                <!-- @todo add class -->
+                <h3 class="add class">
+                    {#{ category.childs }#}
+                    <a href="/voice/category/{{ category.id }}/">{{ category.name }}</a>
+                </h3>
+                <p>
+                    {% for child in category.childs %}
+                    <a href="/voice/category/{{ child.id }}/">{{ child.name }}</a>,
+                    {% endfor %}
+                </p>
+            </li>
+            {% endfor %}
+        <!-- /round block -->
+        </ul>
+    </div>
+    <!-- /block content -->
+</div>
+{% endblock %}
+
+{% block content %}
+
+<noindex>
+<script type="text/javascript" src="/media/export/js/swfobject.js"></script>
+<script type="text/javascript">
+jQuery.extend({
+    prevnew: function(el) {
+        if ( $("#scrollablenew .cards-list:visible").prev('.cards-list').size() > 0  )
+        {
+            removeAllSWFFromBlock("#scrollablenew .cards-list:visible");
+            $("#scrollablenew .cards-list:visible").hide().prev().show();
+        }
+        return true;
+    },
+    nextnew: function(el) {
+        if ( $("#scrollablenew .cards-list:visible + table").size() > 0 )
+        {
+            removeAllSWFFromBlock("#scrollablenew .cards-list:visible");
+            $("#scrollablenew .cards-list:visible").hide().next().show();
+        }
+        return true;
+    }
+});
+<!--
+var _VcSwfDivArray = new Array();
+function show(div, id, pt) {
+  _VcSwfDivArray.push(new Array(div, id, pt));
+  swfobject.embedSWF('/media/export/flash/smallPlayer.swf', div, '66', '69', '8.0.0', '', { id: id, t:pt, base_url: 'http://www.voicecards.ru/get/track/?id=' }, { wmode: 'opaque', play: 'true' });
+}
+document.onunload = function(){
+    for (var i=0; i<_VcSwfDivArray.length; i++){
+        document.getElementById(_VcSwfDivArray[i][0]).innerHTML = '<a href="javascript:void(0)" onclick="show(\''+_VcSwfDivArray[i][0]+'\', '+_VcSwfDivArray[i][1]+', '+_VcSwfDivArray[i][2]+')"><img src="/media/export/images/player.gif" width="64" height="67" /></a>'
+    }
+}
+//-->
+</script>
+</noindex>
+				<div class="b-heading">
+                    <div class="b-pathway"><a href="/voice/"><img src="/media/export/images/ico_home.gif" border="0" /></a>/<span>{{ category.nameshort }}</span></div>
+					<div class="pic g-png"><img src="/media/export/icons/birthday.png" alt="" /></div>
+					<h2>{{ category.nameshort }}</h2>
+				</div>
+				<!-- category rubricator -->
+				<div class="b-box b-box_blue b-box_rubrics">
+					<ul>
+                    {% for cat in subcats %}
+                        {% ifequal forloop.counter0 3 %}
+                        </ul>
+                        <ul>
+                        {% endifequal %}
+                        
+                        {% ifequal cat.id category.id %}
+                            <li><a class="active" href="/voice/category/{{ cat.id }}/">{{ cat.nameshort }}</a><span>(77)</span></li>
+                        {% else %}
+                            <li><a  href="/voice/category/{{ cat.id }}/">{{ cat.nameshort }}</a><span>(77)</span></li>
+                        {% endifequal %}
+                    {% endfor %}
+                    </ul>
+				</div>
+				<!-- /category rubricator -->
+				<!-- block category -->
+				<div class="b-box b-box_category">
+					<div class="b-count"><p>найдено {{ cardcount }} открыток</p></div>
+					<div class="b-sort">Сначала:
+                        <strong>Популярные</strong> |
+                        <a href="/voice/category/{{ category.id }}/?page={{ page }}&sort=new" class="blue">Новые</a>
+                    </div> 
+					<!-- cont --> 
+        <table class="cards-list">
+{% for card in cards %}
+    {% if card.counter2 %}
+        {% if card.counter %}
+            </tr>
+        {% endif %}
+            <tr>
+    {% endif %}
+                <td>
+                    <div class="b-card">
+                        <div class="player">
+                            <a id="repl_id_{{ card.id }}" href="javascript:void(0)" onclick="show('repl_id_{{ card.id }}', {{ card.id }})">
+                                <img src="/media/export/images/player.gif" width="64" height="67" alt="слушать" />
+                            </a>
+                        </div>
+                        <div class="card-info">
+                            <h4><a href="/voice/card/{{ card.id }}">{{ card.name }}</a></h4>
+                            {% if card.catid.catpath %}
+                            <p class="theme"><a href="/voice/category/{{card.catid.id}}">{{ card.catid.nameshort }}</a></p>
+                            {% else %}
+                                {% if card.catid.icon %}
+                                <p class="theme"><a href="/voice/holiday/{{card.catid.id}}">{{ card.catid.nameshort }}</a></p>
+                                {% endif %}
+                            {% endif %}
+                            <p class="send"><a href="/voice/card/{{ card.id }}">отправить</a></p>
+                        </div>
+                    </div>
+                </td>
+{% endfor %}
+            </table>
+			<!-- /cards list -->
+            <!-- paginator --> 
+            <div class="b-paginator"> 
+                <div class="cur-page">Страница <span>{{ page }}</span> из {{ pagecount }}</div> 
+                <div class="pag-left"> 
+                    <a class="btn-back" onmouseout="rmv()" onmouseup="rmv(); return false;" onmousedown="mv(-1)" id="v0" href="#prev" title="Назад"></a> 
+                </div> 
+                <div class="pag-cont"> 
+                    <div id="pages">
+                    {% for p in pages %}
+                        {% ifequal page forloop.counter %}
+                        <a class="act" id="v{{ forloop.counter }}" href="/voice/category/{{ category.id }}/?page={{ forloop.counter }}&sort=popular">{{ forloop.counter }}</a>
+                        {% else %}
+                        <a id="v{{ forloop.counter }}" href="/voice/category/{{ category.id }}/?page={{ forloop.counter }}&sort=popular">{{ forloop.counter }}</a>
+                        {% endifequal %}
+                    {% endfor %}
+                    </div> 
+                </div> 
+                <div class="pag-right"> 
+                    <a class="btn-forw" onmouseout="rmv()" onmouseup="rmv(); return false;" onmousedown="mv(1)" id="v6" href="#next" title="Дальше"></a> 
+                </div> 
+            </div> 
+<script type="text/javascript"> 
+var tid;
+var iter = 0;
+var maxPage = {{ pagecount }} ;
+var act = {{ page }};
+var moveBack = $('#moveBack');
+var moveForw = $('#moveForw');
+var v1  = $('#v1');
+var urlB = '/voice/category/{{ category.id }}/?page=' ;
+var urlA = '' ;
+</script> 
+                <!-- /paginator --> 
+                <!-- /cont --> 
+				</div> 
+				<!-- /block category --> 
+				<!-- more block -->
+				<div class="b-box b-box_more">
+					<!-- cont -->
+					<div class="b-box__content">
+						<!-- near -->
+						<div class="near">
+							<h3>Открытки к ближайшим праздникам</h3>
+							<ul>
+                            {% for hol in holidays %}
+                                {% if forloop.counter0 and hol.counter %}
+                                </ul>
+                                <ul>
+                                {% endif %}
+								<li>
+									<div class="b-item">
+										<div class="pic"><a href="/voice/holiday/{{ hol.id }}"><img src="{{ hol.img }}" width="64" height="64" alt="{{ hol.name }}" /></a></div>
+										<div class="text">
+											<p><a href="/voice/holiday/{{ hol.id}}">{{ hol.name }}</a></p>
+											<span>{{ hol.day }} {{ hol.month }}</span>
+										</div>
+									</div>
+								</li>
+                            {% endfor %}
+       						</ul>
+						</div>
+						<!-- /near -->
+						
+					</div>
+					<!-- /cont -->
+				</div>
+				<!-- /more block -->
+
+{% endblock %}
+
