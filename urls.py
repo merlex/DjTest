@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.conf import settings
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -7,6 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Example:
     # (r'^djtest/', include('djtest.foo.urls')),
+    (r'^%s/' % settings.DAJAXICE_MEDIA_PREFIX, include('dajaxice.urls')),
     (r'^blog/', include('blog.urls')),
     (r'^voice/', include('partnervc.urls')),
     (r'^accounts/', include('accounts.urls')),

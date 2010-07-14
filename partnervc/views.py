@@ -288,8 +288,14 @@ def category_page_view(request, **kw):
     del cards
     #raise NameError('HiThere')
     page = request.GET.get('page',1)
+    sort = request.GET.get('sort','pop')
+    if sort == 'new':
+        sortType = '-numorders_30'
+    else:
+        sortType = '-datepublished'
+        sort     = 'pop'
     if kw['catid'] >0:
-        cards     = getCardList(kw['catid'],'-numorders_30',15,int(page)-1)
+        cards     = getCardList(kw['catid'],sortType,15,int(page)-1)
         category  = CategoryVC.objects.get(id=kw['catid'])
         cardcount = CardVC.objects.select_related().filter(Q(cats__id = kw['catid'])|Q(cats__parentid = kw['catid'])).count()
         subcats   = CategoryVC.objects.select_related().filter(parentid = kw['catid'])
@@ -297,9 +303,9 @@ def category_page_view(request, **kw):
             subcats   = CategoryVC.objects.select_related().filter(parentid = category.parentid)
         
     else:
-        cards = getCardList(0,'-numorders_30',15,int(page)-1)
+        cards = getCardList(0,sortType,15,int(page)-1)
         cardcount = CardVC.objects.count()
-    raise NameError('HiThere'+str(len(cards)))
+    #raise NameError('HiThere'+str(len(cards)))
     kw['categories'] = catgs2
     kw['holidays']   = hols
     kw['category']   = category
@@ -307,6 +313,7 @@ def category_page_view(request, **kw):
     kw['cardcount']  = cardcount
     kw['page']       = int(page)
     kw['pagecount']  = int(cardcount/15)+1
+    kw['sort']       = sort
     if kw['pagecount']>12:
         kw['pages']      = xrange(12)
     else:

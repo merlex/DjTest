@@ -6,6 +6,7 @@
 <meta name="description" content="{ meta_description }"/>
 <meta name="keywords" content="{ meta_keywords }"/>
 <link href="/media/css/style.css" rel="stylesheet" type="text/css"/>
+{% load dajaxice_templatetags %}{% dajaxice_js_import %}
 </head>
 
 <body>
@@ -73,6 +74,19 @@
       <tr>
         <td width="1" height="100%" valign="top" style="background-image:url(/media/images/menu-bg.gif);">
         <table width="199" style="height:100%;" border="0" cellpadding="0" cellspacing="0">
+<input onclick="Dajaxice.djtest.blog.primer('primer_callback',{'message':'Хэллоу Уорлд!'});" type="button" value="Push Me!" />
+<script type="text/javascript">
+function primer_callback(data)
+{
+    if(data!=Dajaxice.EXCEPTION)
+    {
+        alert(data.message);
+    }else
+    {
+            alert('Error');
+    }
+}
+</script>
 <!--MENU-->
     {% load tagging_tags %}
     {% tag_cloud_for_model blog.Blog as item_tags %}

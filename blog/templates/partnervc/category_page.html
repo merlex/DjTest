@@ -74,16 +74,13 @@ document.onunload = function(){
 				<!-- category rubricator -->
 				<div class="b-box b-box_blue b-box_rubrics">
 					<ul>
+                    {% cycle '' '</ul><ul>' as rowul %}
                     {% for cat in subcats %}
-                        {% ifequal forloop.counter0 3 %}
-                        </ul>
-                        <ul>
-                        {% endifequal %}
-                        
+                        {% cycle rowul %}
                         {% ifequal cat.id category.id %}
-                            <li><a class="active" href="/voice/category/{{ cat.id }}/">{{ cat.nameshort }}</a><span>(77)</span></li>
+                            <li><a class="active" href="/voice/category/{{ cat.id }}/">{{ cat.nameshort }}</a></li>
                         {% else %}
-                            <li><a  href="/voice/category/{{ cat.id }}/">{{ cat.nameshort }}</a><span>(77)</span></li>
+                            <li><a  href="/voice/category/{{ cat.id }}/">{{ cat.nameshort }}</a></li>
                         {% endifequal %}
                     {% endfor %}
                     </ul>
@@ -93,8 +90,13 @@ document.onunload = function(){
 				<div class="b-box b-box_category">
 					<div class="b-count"><p>найдено {{ cardcount }} открыток</p></div>
 					<div class="b-sort">Сначала:
+                    {% ifequal sort "pop" %}
                         <strong>Популярные</strong> |
                         <a href="/voice/category/{{ category.id }}/?page={{ page }}&sort=new" class="blue">Новые</a>
+                    {% else %}
+                        <a href="/voice/category/{{ category.id }}/?page={{ page }}&sort=pop" class="blue">Популярные</a> |
+                        <strong>Новые</strong>
+                    {% endifequal %}
                     </div> 
 					<!-- cont --> 
         <table class="cards-list">

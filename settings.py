@@ -100,8 +100,12 @@ INSTALLED_APPS = (
     'south',
     'partnervc',
     'publicauth',
+    'dajaxice',
 )
 SESSION_COOKIE_NAME = 'djtest'
+DAJAXICE_MEDIA_PREFIX = 'dajaxice'
+DAJAXICE_FUNCTIONS = ('djtest.blog.ajax.primer',
+                     )
 
 #MESSAGE_STORAGE = 'django.contrib.messages.storage.cookie.CookieStorage'
 
